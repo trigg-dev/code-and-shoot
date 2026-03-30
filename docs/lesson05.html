@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 05: 画面の端で止まろう｜スペース★サバイバー</title>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;900&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0e1a;
+    --card: #141828;
+    --card-border: #1e2744;
+    --accent: #3db8ff;
+    --accent-dim: #1a5a8a;
+    --yellow: #ffe066;
+    --green: #6cdb8a;
+    --pink: #ff6b9d;
+    --orange: #ffa44f;
+    --text: #c8d6e5;
+    --text-bright: #eef2f7;
+    --code-bg: #0d1120;
+    --tag-bg: #1a2340;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    padding: 0 0 80px 0;
+  }
+
+  /* --- ヘッダー --- */
+  .header {
+    text-align: center;
+    padding: 60px 20px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(61,184,255,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header .lesson-number {
+    display: inline-block;
+    background: var(--accent-dim);
+    color: var(--accent);
+    font-size: 0.9em;
+    font-weight: 700;
+    padding: 4px 18px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+    letter-spacing: 0.05em;
+  }
+  .header h1 {
+    font-size: 2.4em;
+    font-weight: 900;
+    color: var(--text-bright);
+    letter-spacing: 0.02em;
+  }
+  .header h1 span { color: var(--accent); }
+  .header p {
+    margin-top: 8px;
+    font-size: 1.05em;
+    color: var(--text);
+    opacity: 0.7;
+  }
+
+  /* --- レイアウト --- */
+  .page-layout { display: flex; max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+  .sidebar {
+    position: sticky; top: 20px; align-self: flex-start;
+    width: 180px; flex-shrink: 0; padding-right: 24px; display: none;
+  }
+  .sidebar nav { display: flex; flex-direction: column; gap: 4px; }
+  .sidebar a {
+    display: block; padding: 6px 12px; color: var(--text);
+    text-decoration: none; font-size: 0.82em; font-weight: 700;
+    border-left: 2px solid transparent; border-radius: 0 6px 6px 0;
+    transition: all 0.2s; opacity: 0.6;
+  }
+  .sidebar a:hover { opacity: 1; color: var(--accent); }
+  .sidebar a.active {
+    border-left-color: var(--accent); color: var(--accent);
+    opacity: 1; background: rgba(61,184,255,0.05);
+  }
+  .main-content { flex: 1; min-width: 0; max-width: 800px; }
+  @media (min-width: 900px) { .sidebar { display: block; } }
+
+  /* --- ゴールセクション --- */
+  .goal-section {
+    background: linear-gradient(135deg, #1a2a4a 0%, #141828 100%);
+    border: 1px solid var(--accent-dim);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .goal-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--green));
+  }
+  .goal-section h2 {
+    font-size: 1.3em;
+    font-weight: 900;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .goal-section ul {
+    list-style: none;
+    padding: 0;
+  }
+  .goal-section li {
+    padding: 4px 0;
+    position: relative;
+    padding-left: 24px;
+  }
+  .goal-section li::before {
+    content: '🎯';
+    position: absolute;
+    left: 0;
+  }
+
+  /* --- ステップセクション --- */
+  .step {
+    margin-bottom: 48px;
+  }
+  .step-title {
+    font-size: 1.4em;
+    font-weight: 900;
+    color: var(--text-bright);
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--card-border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: var(--accent-dim);
+    color: var(--accent);
+    border-radius: 50%;
+    font-size: 0.85em;
+    font-weight: 900;
+    flex-shrink: 0;
+  }
+  .step p {
+    margin-bottom: 14px;
+    font-size: 1.05em;
+  }
+  .step strong {
+    color: var(--text-bright);
+  }
+
+  /* --- コードブロック --- */
+  .code-block {
+    position: relative;
+    margin: 16px 0 20px;
+  }
+  .code-block pre {
+    background: var(--code-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    padding-top: 20px;
+    overflow-x: auto;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.92em;
+    line-height: 1.7;
+    color: var(--text);
+  }
+  .copy-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: var(--tag-bg);
+    color: var(--accent);
+    border: 1px solid var(--card-border);
+    border-radius: 6px;
+    padding: 4px 12px;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-size: 0.78em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+    z-index: 2;
+  }
+  .copy-btn:hover {
+    background: var(--accent-dim);
+    color: #fff;
+  }
+
+  code {
+    font-family: 'Source Code Pro', monospace;
+    background: var(--code-bg);
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 0.92em;
+    color: var(--yellow);
+  }
+
+  pre .comment { color: #5a6a8a; }
+  pre .keyword { color: var(--pink); }
+  pre .func { color: var(--yellow); }
+  pre .number { color: var(--green); }
+  pre .string { color: var(--orange); }
+
+  /* --- ヒント・やってみよう --- */
+  .hint {
+    background: #1a1e30;
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 0.95em;
+  }
+  .try-it {
+    background: #1a2a1a;
+    border-left: 3px solid var(--green);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 0.95em;
+    color: var(--green);
+    font-weight: 700;
+  }
+  .try-it::before { content: '🚀 '; }
+
+  .challenge {
+    background: linear-gradient(135deg, #2a1a2a, #141828);
+    border-left: 3px solid var(--pink);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 0.95em;
+    color: var(--pink);
+    font-weight: 700;
+  }
+  .challenge::before { content: '✏️ '; }
+
+  /* --- デモボタン・モーダル --- */
+  .demo-btn {
+    background: linear-gradient(135deg, var(--accent-dim), var(--accent));
+    color: #fff; border: none; border-radius: 12px;
+    padding: 14px 36px; font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-size: 1.1em; font-weight: 700; cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .demo-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(61,184,255,0.3); }
+  .modal-overlay {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.85); z-index: 1000;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .modal-content {
+    position: relative; background: var(--card);
+    border: 1px solid var(--card-border); border-radius: 16px; padding: 24px;
+  }
+  .modal-close {
+    position: absolute; top: -12px; right: -12px;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--card); border: 1px solid var(--card-border);
+    color: var(--text); font-size: 1.2em; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .modal-close:hover { background: var(--pink); color: #fff; }
+  .demo-note {
+    text-align: center; padding: 12px; margin-bottom: 12px;
+    color: var(--yellow); font-weight: 700; font-size: 0.95em;
+  }
+  .demo-btn-wrapper {
+    text-align: center;
+    margin: 32px 0;
+  }
+
+  /* --- ナビゲーション --- */
+  .lesson-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 60px;
+    padding-top: 30px;
+    border-top: 2px solid var(--card-border);
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .lesson-nav a {
+    display: inline-block;
+    padding: 10px 24px;
+    background: var(--tag-bg);
+    color: var(--accent);
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: background 0.2s;
+  }
+  .lesson-nav a:hover {
+    background: var(--accent-dim);
+    color: #fff;
+  }
+  .lesson-nav .home-link {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+  }
+
+  /* --- レスポンシブ --- */
+  @media (max-width: 600px) {
+    .header h1 { font-size: 1.6em; }
+    .step { margin-bottom: 32px; }
+    .code-block pre { font-size: 0.82em; padding: 12px; }
+    .goal-section { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ========== ヘッダー ========== -->
+<div class="header">
+  <div class="lesson-number">LESSON 05</div>
+  <h1>画面の端で<span>止まろう</span></h1>
+  <p>キャラが画面の外に飛び出さないようにしよう！</p>
+</div>
+
+<!-- ========== メイン ========== -->
+<div class="page-layout">
+
+  <!-- サイドバー -->
+  <aside class="sidebar">
+    <nav>
+      <a href="#goal">今回のゴール</a>
+      <a href="#step1">1. 前回の問題点</a>
+      <a href="#step2">2. ifの中にif</a>
+      <a href="#step3">3. 端の値を考えよう</a>
+      <a href="#step4">4. 残りも書いてみよう</a>
+      <a href="#demo">デモ</a>
+    </nav>
+  </aside>
+
+  <div class="main-content">
+
+  <!-- ゴール -->
+  <div id="goal" class="goal-section">
+    <h2>今回のゴール</h2>
+    <ul>
+      <li><code>if</code>の中に<code>if</code>を書く「ネスト」をおぼえる</li>
+      <li>上下左右すべてに端チェックを入れる</li>
+      <li>キャラが画面の外に出ないようにする</li>
+    </ul>
+  </div>
+
+  <!-- ステップ1 -->
+  <div id="step1" class="step">
+    <h3 class="step-title"><span class="step-number">1</span> 前回の問題点</h3>
+    <p>前回のレッスンで、矢印キーでキャラを動かせるようになったよね。でも、ずっと同じ方向に動かすと……<strong>キャラが画面の外に消えちゃう！</strong></p>
+    <p>これはカッコ悪い！ゲームっぽくするには、<strong>端まで来たら止まる</strong>ようにしないとね。</p>
+  </div>
+
+  <!-- ステップ2 -->
+  <div id="step2" class="step">
+    <h3 class="step-title"><span class="step-number">2</span> ifの中にif（ネスト）</h3>
+    <p>「もし左キーが押されていたら動く」だけだと、どこまでも動いちゃう。そこで、もうひとつ条件を追加しよう。</p>
+    <p><strong>「もし左キーが押されていたら、さらに、もし playerX が 20 より大きかったら動く」</strong></p>
+    <p>こうすれば、<code>playerX</code> が 20 以下になったら動かなくなる＝端で止まる！</p>
+    <div class="code-block">
+      <button class="copy-btn">コピー</button>
+<pre><code><span class="keyword">if</span> (<span class="func">keyIsDown</span>(<span class="number">LEFT_ARROW</span>)) {
+  <span class="comment">// さらに条件を追加！</span>
+  <span class="keyword">if</span> (playerX > <span class="number">20</span>) {
+    playerX = playerX - playerSpeed;
+  }
+}</code></pre>
+    </div>
+    <p><code>if</code> の中に <code>if</code> を書くことを<strong>「ネスト」</strong>って言うよ。入れ子みたいなイメージだね。</p>
+    <div class="hint">💡 インデント（字下げ）を使って、どの <code>if</code> がどの <code>{}</code> に対応するか分かりやすくしよう！</div>
+  </div>
+
+  <!-- ステップ3 -->
+  <div id="step3" class="step">
+    <h3 class="step-title"><span class="step-number">3</span> 端の値を考えよう</h3>
+    <p>画面サイズは <strong>横480 × 縦640</strong>。キャラのサイズは <strong>横36 × 縦44</strong> の楕円だよ。</p>
+    <p><code>ellipse</code> は中心の座標で描くから、端にちょうど止めるには半分のサイズぶんだけ余裕が必要だね。</p>
+    <p>ざっくり計算すると：</p>
+    <ul style="margin: 12px 0 12px 24px; line-height: 2.2;">
+      <li><strong>左の端</strong>：<code>playerX > 20</code>（36の半分 ≒ 18、ちょっと余裕をもって20）</li>
+      <li><strong>右の端</strong>：<code>playerX < 460</code>（480 - 20）</li>
+      <li><strong>上の端</strong>：<code>playerY > 20</code>（44の半分 ≒ 22、ちょっと余裕をもって20）</li>
+      <li><strong>下の端</strong>：<code>playerY < 620</code>（640 - 20）</li>
+    </ul>
+    <div class="try-it">数字を変えてみよう！たとえば 20 を 50 にすると、もっと内側で止まるよ。</div>
+  </div>
+
+  <!-- ステップ4 -->
+  <div id="step4" class="step">
+    <h3 class="step-title"><span class="step-number">4</span> 残りの方向も書いてみよう</h3>
+    <p>左のチェックはステップ2で書いたね。同じパターンで残りの3方向も書いてみよう！</p>
+
+    <div class="challenge">右の端は <code>playerX < 460</code> で止まるよ。同じように書いてみよう！</div>
+
+    <div class="challenge">上下も同じパターンで書いてみよう！上の端は <code>playerY > 20</code>、下の端は <code>playerY < 620</code> だよ。</div>
+
+    <div class="hint">💡 パターンは全部同じ！外側の <code>if</code> でキーを調べて、内側の <code>if</code> で端チェック。方向と比べる数字が違うだけだよ。</div>
+
+    <div class="try-it"><code>playerSpeed</code> を 8 にして、端ギリギリの動きを確認してみよう！</div>
+  </div>
+
+  <!-- デモ -->
+  <div id="demo" class="demo-btn-wrapper">
+    <button class="demo-btn" onclick="openDemo()">🎮 デモを見る</button>
+  </div>
+
+  <!-- ナビゲーション -->
+  <div class="lesson-nav">
+    <a href="lesson04.html">&larr; Lesson 04</a>
+    <a href="index.html" class="home-link">もくじに戻る</a>
+    <a href="lesson06.html">Lesson 06 &rarr;</a>
+  </div>
+
+  </div><!-- /main-content -->
+</div><!-- /page-layout -->
+
+<!-- ========== モーダル ========== -->
+<div class="modal-overlay" id="demo-modal" style="display:none;">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeDemo()">&times;</button>
+    <p class="demo-note">デモをクリックしてから矢印キーで動かしてみよう！端で止まるよ！</p>
+    <div id="demo-container"></div>
+  </div>
+</div>
+
+<!-- ========== p5.js デモ ========== -->
+<script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js"></script>
+<script>
+let demoInstance = null;
+
+function openDemo() {
+  document.getElementById('demo-modal').style.display = 'flex';
+  if (!demoInstance) {
+    demoInstance = new p5(function(p) {
+      let playerX = 240, playerY = 580, playerSpeed = 4;
+      p.setup = function() { p.createCanvas(480, 640); };
+      p.draw = function() {
+        p.background(10, 10, 30);
+
+        // 星
+        p.randomSeed(42);
+        p.fill(255, 255, 255, 80);
+        p.noStroke();
+        for (let i = 0; i < 80; i++) {
+          let sx = p.random(480);
+          let sy = p.random(640);
+          let ss = p.random(1, 3);
+          p.ellipse(sx, sy, ss, ss);
+        }
+
+        if (p.keyIsDown(p.LEFT_ARROW) && playerX > 20) playerX -= playerSpeed;
+        if (p.keyIsDown(p.RIGHT_ARROW) && playerX < 460) playerX += playerSpeed;
+        if (p.keyIsDown(p.UP_ARROW) && playerY > 20) playerY -= playerSpeed;
+        if (p.keyIsDown(p.DOWN_ARROW) && playerY < 620) playerY += playerSpeed;
+
+        // プレイヤー
+        p.fill(60, 180, 255);
+        p.noStroke();
+        p.ellipse(playerX, playerY, 36, 44);
+
+        // エンジンの光
+        p.fill(100, 200, 255, 150);
+        p.ellipse(playerX, playerY + 20, 12, 8);
+      };
+    }, 'demo-container');
+  }
+}
+
+function closeDemo() {
+  document.getElementById('demo-modal').style.display = 'none';
+  if (demoInstance) {
+    demoInstance.remove();
+    demoInstance = null;
+  }
+}
+
+// ESCで閉じる
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeDemo();
+});
+// オーバーレイクリックで閉じる
+document.getElementById('demo-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeDemo();
+});
+</script>
+
+<!-- ========== コピーボタン ========== -->
+<script>
+document.querySelectorAll('.copy-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const code = btn.closest('.code-block').querySelector('code').textContent;
+    navigator.clipboard.writeText(code);
+    btn.textContent = 'コピーした！';
+    setTimeout(() => btn.textContent = 'コピー', 1500);
+  });
+});
+</script>
+
+<!-- ========== サイドバー アクティブ追従 ========== -->
+<script>
+(function() {
+  const sections = document.querySelectorAll('[id]');
+  const links = document.querySelectorAll('.sidebar a');
+  if (!links.length) return;
+
+  function update() {
+    let current = '';
+    sections.forEach(s => {
+      if (s.getBoundingClientRect().top <= 80) current = s.id;
+    });
+    links.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+})();
+</script>
+
+</body>
+</html>

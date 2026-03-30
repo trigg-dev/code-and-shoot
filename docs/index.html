@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Code & Shoot｜もくじ</title>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;900&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0e1a;
+    --card: #141828;
+    --card-border: #1e2744;
+    --accent: #3db8ff;
+    --accent-dim: #1a5a8a;
+    --yellow: #ffe066;
+    --green: #6cdb8a;
+    --pink: #ff6b9d;
+    --orange: #ffa44f;
+    --text: #c8d6e5;
+    --text-bright: #eef2f7;
+    --code-bg: #0d1120;
+    --tag-bg: #1a2340;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    padding: 0 0 80px 0;
+  }
+
+  .header {
+    text-align: center;
+    padding: 60px 20px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(61,184,255,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header h1 {
+    font-size: 2.4em;
+    font-weight: 900;
+    color: var(--text-bright);
+    letter-spacing: 0.02em;
+  }
+  .header h1 span { color: var(--accent); }
+  .header p {
+    margin-top: 8px;
+    font-size: 1.05em;
+    color: var(--text);
+    opacity: 0.7;
+  }
+
+  .container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .section-title {
+    font-size: 1.3em;
+    font-weight: 900;
+    color: var(--text-bright);
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+    margin-top: 40px;
+    border-bottom: 2px solid var(--card-border);
+  }
+
+  .lesson-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .lesson-list li a {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 18px 24px;
+    text-decoration: none;
+    color: var(--text);
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .lesson-list li a:hover {
+    border-color: var(--accent);
+    background: #181d34;
+  }
+
+  .lesson-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--accent-dim);
+    color: var(--accent);
+    font-weight: 900;
+    font-size: 1.1em;
+    flex-shrink: 0;
+  }
+
+  .lesson-info {
+    flex: 1;
+  }
+  .lesson-title {
+    font-size: 1.05em;
+    font-weight: 700;
+    color: var(--text-bright);
+  }
+  .lesson-desc {
+    font-size: 0.88em;
+    color: var(--text);
+    opacity: 0.7;
+  }
+
+  .lesson-list li.disabled a {
+    opacity: 0.4;
+    pointer-events: none;
+    cursor: default;
+  }
+  .lesson-list li.disabled .lesson-num {
+    background: var(--card-border);
+    color: #556;
+  }
+
+  .ref-link {
+    display: block;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 18px 24px;
+    text-decoration: none;
+    color: var(--text);
+    transition: border-color 0.2s, background 0.2s;
+    margin-top: 12px;
+  }
+  .ref-link:hover {
+    border-color: var(--yellow);
+    background: #181d34;
+  }
+  .ref-link .ref-title {
+    font-size: 1.05em;
+    font-weight: 700;
+    color: var(--yellow);
+  }
+  .ref-link .ref-desc {
+    font-size: 0.88em;
+    opacity: 0.7;
+  }
+
+  @media (max-width: 600px) {
+    .header h1 { font-size: 1.6em; }
+    .lesson-list li a { padding: 14px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1><span>Code &</span> Shoot</h1>
+  <p>p5.js でシューティングゲームを作ろう！</p>
+</div>
+
+<div class="container">
+
+  <h2 class="section-title">レッスン</h2>
+  <ul class="lesson-list">
+    <li>
+      <a href="lesson01.html">
+        <div class="lesson-num">1</div>
+        <div class="lesson-info">
+          <div class="lesson-title">エディタに慣れよう</div>
+          <div class="lesson-desc">座標、RGB、関数呼び出し</div>
+        </div>
+      </a>
+    </li>
+    <li>
+      <a href="lesson02.html">
+        <div class="lesson-num">2</div>
+        <div class="lesson-info">
+          <div class="lesson-title">自機を描こう</div>
+          <div class="lesson-desc">ellipse、fill、noStroke、位置とサイズ</div>
+        </div>
+      </a>
+    </li>
+    <li>
+      <a href="lesson03.html">
+        <div class="lesson-num">3</div>
+        <div class="lesson-info">
+          <div class="lesson-title">変数で動かそう</div>
+          <div class="lesson-desc">変数（let）、変数の更新で移動</div>
+        </div>
+      </a>
+    </li>
+    <li>
+      <a href="lesson04.html">
+        <div class="lesson-num">4</div>
+        <div class="lesson-info">
+          <div class="lesson-title">キーボードで操作しよう</div>
+          <div class="lesson-desc">if文、keyIsDown、上下左右移動</div>
+        </div>
+      </a>
+    </li>
+    <li class="disabled">
+      <a href="#">
+        <div class="lesson-num">5</div>
+        <div class="lesson-info">
+          <div class="lesson-title">画面の端で止まろう</div>
+          <div class="lesson-desc">準備中...</div>
+        </div>
+      </a>
+    </li>
+    <li class="disabled">
+      <a href="#">
+        <div class="lesson-num">6</div>
+        <div class="lesson-info">
+          <div class="lesson-title">弾を撃とう</div>
+          <div class="lesson-desc">準備中...</div>
+        </div>
+      </a>
+    </li>
+  </ul>
+
+  <h2 class="section-title">リファレンス</h2>
+  <a href="reference.html" class="ref-link">
+    <div class="ref-title">p5.js リファレンス</div>
+    <div class="ref-desc">授業で使う p5.js の命令まとめ</div>
+  </a>
+
+</div>
+
+</body>
+</html>

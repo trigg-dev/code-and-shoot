@@ -1,12 +1,18 @@
 // =====================
 // Code & Shoot
-// 第5回: 画面の端で止まろう
+// 第6回: 弾を撃とう
 // =====================
 
 // === プレイヤー ===
 let playerX = 240;
 let playerY = 580;
 let playerSpeed = 4;
+
+// === 弾丸 ===
+let bulletX = 0;
+let bulletY = 0;
+let bulletSpeed = 6;
+let bulletActive = false;
 
 function setup() {
   createCanvas(480, 640);
@@ -37,8 +43,33 @@ function draw() {
     }
   }
 
+  // --- 弾丸の発射 ---
+  if (keyIsDown(32)) {
+    if (!bulletActive) {
+      bulletActive = true;
+      bulletX = playerX;
+      bulletY = playerY - 20;
+    }
+  }
+
+  // --- 弾丸の移動 ---
+  if (bulletActive) {
+    bulletY = bulletY - bulletSpeed;
+  }
+
+  // --- 画面外に出たら消す ---
+  if (bulletY < 0) {
+    bulletActive = false;
+  }
+
   // --- 描画: プレイヤー ---
   fill(60, 180, 255);
   noStroke();
   ellipse(playerX, playerY, 36, 44);
+
+  // --- 描画: 弾丸 ---
+  if (bulletActive) {
+    fill(255, 255, 100);
+    ellipse(bulletX, bulletY, 6, 12);
+  }
 }

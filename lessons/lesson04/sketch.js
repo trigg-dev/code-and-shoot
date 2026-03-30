@@ -1,6 +1,6 @@
 // =====================
 // Code & Shoot
-// 第4回: 画面の端で止まろう
+// 第4回: キーボードで操作しよう
 // =====================
 
 // === プレイヤー ===
@@ -15,16 +15,18 @@ function setup() {
 function draw() {
   background(10, 10, 30);
 
-  // --- プレイヤー操作（端チェックつき） ---
+  // --- プレイヤー操作 ---
   if (keyIsDown(LEFT_ARROW)) {
-    if (playerX > 20) {
-      playerX = playerX - playerSpeed;
-    }
+    playerX = playerX - playerSpeed;
   }
   if (keyIsDown(RIGHT_ARROW)) {
-    if (playerX < 460) {
-      playerX = playerX + playerSpeed;
-    }
+    playerX = playerX + playerSpeed;
+  }
+  if (keyIsDown(UP_ARROW)) {
+    playerY = playerY - playerSpeed;
+  }
+  if (keyIsDown(DOWN_ARROW)) {
+    playerY = playerY + playerSpeed;
   }
 
   // --- 描画: プレイヤー ---
