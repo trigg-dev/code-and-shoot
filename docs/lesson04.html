@@ -220,6 +220,16 @@
     color: var(--yellow);
   }
 
+  /* --- 情報カード --- */
+  .info-card {
+    background: #1a1e30;
+    border-left: 3px solid var(--orange);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 0.95em;
+  }
+
   /* --- ヒント --- */
   .hint {
     background: #1a1e30;
@@ -350,7 +360,7 @@
     <a href="#if-statement">if文とは</a>
     <a href="#left-right">左右に動かす</a>
     <a href="#up-down-challenge">上下も挑戦</a>
-    <a href="#player-speed">playerSpeed</a>
+    <a href="#player-speed">完成コード</a>
   </nav>
 </aside>
 
@@ -372,8 +382,8 @@
 
   <div class="code-block">
     <button class="copy-btn">コピー</button>
-    <pre><code><span class="keyword">let</span> playerX = <span class="number">240</span>;
-<span class="keyword">let</span> playerY = <span class="number">580</span>;
+    <pre><code><span class="keyword">let</span> x = <span class="number">240</span>;
+<span class="keyword">let</span> y = <span class="number">580</span>;
 
 <span class="keyword">function</span> <span class="func">setup</span>() {
   <span class="func">createCanvas</span>(<span class="number">480</span>, <span class="number">640</span>);
@@ -383,7 +393,7 @@
   <span class="func">background</span>(<span class="number">10</span>, <span class="number">10</span>, <span class="number">30</span>);
   <span class="func">fill</span>(<span class="number">60</span>, <span class="number">180</span>, <span class="number">255</span>);
   <span class="func">noStroke</span>();
-  <span class="func">ellipse</span>(playerX, playerY, <span class="number">36</span>, <span class="number">44</span>);
+  <span class="func">ellipse</span>(x, y, <span class="number">36</span>, <span class="number">44</span>);
 }</code></pre>
   </div>
 </div>
@@ -396,13 +406,13 @@
   <div class="card">
     <p>日本語で書くとこんな感じ：</p>
     <p style="color: var(--green); font-weight: 700; font-size: 1.1em; margin: 12px 0;">
-      「もし 左キーが押されていたら、playerX を減らす」
+      「もし 左キーが押されていたら、x を減らす」
     </p>
     <p>これをプログラムで書くと：</p>
     <div class="code-block">
       <button class="copy-btn">コピー</button>
       <pre><code><span class="keyword">if</span> (<span class="func">keyIsDown</span>(LEFT_ARROW)) {
-  playerX = playerX - playerSpeed;
+  x = x - <span class="number">4</span>;
 }</code></pre>
     </div>
   </div>
@@ -418,18 +428,18 @@
   <div class="code-block">
     <button class="copy-btn">コピー</button>
     <pre><code><span class="keyword">if</span> (<span class="func">keyIsDown</span>(LEFT_ARROW)) {
-  playerX = playerX - playerSpeed;
+  x = x - <span class="number">4</span>;
 }</code></pre>
   </div>
 
-  <p><code>LEFT_ARROW</code> は左矢印キーのこと。左キーが押されている間、<code>playerX</code> が減って左に動くよ。</p>
+  <p><code>LEFT_ARROW</code> は左矢印キーのこと。左キーが押されている間、<code>x</code> が減って左に動くよ。</p>
 
-  <p>右も同じ考え方。今度は <code>playerX</code> を<strong style="color: var(--green);">増やす</strong>：</p>
+  <p>右も同じ考え方。今度は <code>x</code> を<strong style="color: var(--green);">増やす</strong>：</p>
 
   <div class="code-block">
     <button class="copy-btn">コピー</button>
     <pre><code><span class="keyword">if</span> (<span class="func">keyIsDown</span>(RIGHT_ARROW)) {
-  playerX = playerX + playerSpeed;
+  x = x + <span class="number">4</span>;
 }</code></pre>
   </div>
 
@@ -442,30 +452,47 @@
   <p>左右ができたら、次は上下だ。ここはコードを見ずに自分で書いてみよう！</p>
 
   <div class="challenge">
-    同じように <code>UP_ARROW</code> と <code>DOWN_ARROW</code> も書いてみよう！上に動かすには <code>playerY</code> をどうすればいい？下は？
+    同じように <code>UP_ARROW</code> と <code>DOWN_ARROW</code> も書いてみよう！上に動かすには <code>y</code> をどうすればいい？下は？
   </div>
 
-  <div class="hint">💡 画面の座標では、上にいくほど Y が小さくなるよ。だから上に動かすには <code>playerY</code> を<strong>減らす</strong>んだ。ちょっとヘンだけど、慣れると大丈夫！</div>
+  <div class="hint">💡 画面の座標では、上にいくほど Y が小さくなるよ。だから上に動かすには <code>y</code> を<strong>減らす</strong>んだ。ちょっとヘンだけど、慣れると大丈夫！</div>
 </div>
 
-<!-- ========== STEP 5: playerSpeed ========== -->
+<!-- ========== STEP 5: 完成コード ========== -->
 <div id="player-speed" class="step">
-  <h2 class="step-title"><span class="step-num">5</span> playerSpeed 変数で速さを管理</h2>
-  <p>今は速さの数字を直接書いているけど、これも変数にしよう。速さを変えたいとき、1か所変えるだけで OK になるよ：</p>
+  <h2 class="step-title"><span class="step-num">5</span> 完成コードを確認しよう</h2>
+  <p>上下左右すべて書けたら、こんなコードになるはず：</p>
 
   <div class="code-block">
     <button class="copy-btn">コピー</button>
-    <pre><code><span class="keyword">let</span> playerSpeed = <span class="number">4</span>;
+    <pre><code><span class="keyword">let</span> x = <span class="number">240</span>;
+<span class="keyword">let</span> y = <span class="number">580</span>;
 
-<span class="comment">// あとは数字のかわりに playerSpeed を使う</span>
-<span class="keyword">if</span> (<span class="func">keyIsDown</span>(LEFT_ARROW)) {
-  playerX = playerX - playerSpeed;
+<span class="keyword">function</span> <span class="func">setup</span>() {
+  <span class="func">createCanvas</span>(<span class="number">480</span>, <span class="number">640</span>);
+}
+
+<span class="keyword">function</span> <span class="func">draw</span>() {
+  <span class="func">background</span>(<span class="number">10</span>, <span class="number">10</span>, <span class="number">30</span>);
+
+  <span class="keyword">if</span> (<span class="func">keyIsDown</span>(LEFT_ARROW))  { x = x - <span class="number">4</span>; }
+  <span class="keyword">if</span> (<span class="func">keyIsDown</span>(RIGHT_ARROW)) { x = x + <span class="number">4</span>; }
+  <span class="keyword">if</span> (<span class="func">keyIsDown</span>(UP_ARROW))    { y = y - <span class="number">4</span>; }
+  <span class="keyword">if</span> (<span class="func">keyIsDown</span>(DOWN_ARROW))  { y = y + <span class="number">4</span>; }
+
+  <span class="func">fill</span>(<span class="number">60</span>, <span class="number">180</span>, <span class="number">255</span>);
+  <span class="func">noStroke</span>();
+  <span class="func">ellipse</span>(x, y, <span class="number">36</span>, <span class="number">44</span>);
 }</code></pre>
   </div>
 
   <div class="try-it">
-    <code>playerSpeed</code> を <code>2</code> にしたらどうなる？<code>8</code> にしたら？<br>
+    <code>4</code> の数字を <code>2</code> にしたらどうなる？<code>8</code> にしたら？<br>
     自分がちょうどいいと思う速さを見つけてみよう！
+  </div>
+
+  <div class="info-card" style="border-left-color: var(--orange); margin-top: 20px;">
+    <strong>発展:</strong> 4 を変数にすると便利だよ。<code>let speed = 4;</code> と書いて、<code>x = x - speed;</code> のように使えば、速さをまとめて変えられる！
   </div>
 </div>
 
@@ -502,17 +529,17 @@ function openDemo() {
   document.getElementById('demo-modal').style.display = 'flex';
   if (!demoInstance) {
     demoInstance = new p5(function(p) {
-      let playerX = 240, playerY = 580, playerSpeed = 4;
+      let x = 240, y = 580;
       p.setup = function() { p.createCanvas(480, 640); };
       p.draw = function() {
         p.background(10, 10, 30);
-        if (p.keyIsDown(p.LEFT_ARROW)) playerX -= playerSpeed;
-        if (p.keyIsDown(p.RIGHT_ARROW)) playerX += playerSpeed;
-        if (p.keyIsDown(p.UP_ARROW)) playerY -= playerSpeed;
-        if (p.keyIsDown(p.DOWN_ARROW)) playerY += playerSpeed;
+        if (p.keyIsDown(p.LEFT_ARROW)) x -= 4;
+        if (p.keyIsDown(p.RIGHT_ARROW)) x += 4;
+        if (p.keyIsDown(p.UP_ARROW)) y -= 4;
+        if (p.keyIsDown(p.DOWN_ARROW)) y += 4;
         p.fill(60, 180, 255);
         p.noStroke();
-        p.ellipse(playerX, playerY, 36, 44);
+        p.ellipse(x, y, 36, 44);
       };
     }, 'demo-container');
   }

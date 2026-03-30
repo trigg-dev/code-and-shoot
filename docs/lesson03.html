@@ -365,14 +365,14 @@
     <p>📦 箱に名前をつけて、数字を入れる：</p>
     <div class="code-block">
       <button class="copy-btn">コピー</button>
-      <pre><code><span class="keyword">let</span> playerX = <span class="number">240</span>;</code></pre>
+      <pre><code><span class="keyword">let</span> x = <span class="number">240</span>;</code></pre>
     </div>
     <p><code>let</code> は「箱をつくるよ！」という合図。<br>
-    <code>playerX</code> が箱の名前。<br>
+    <code>x</code> が箱の名前。<br>
     <code>240</code> が箱に入れた数字。</p>
   </div>
 
-  <div class="hint">💡 <code>playerX</code> は「プレイヤーのX座標（横の位置）」という意味の名前だよ。好きな名前をつけられるけど、わかりやすい名前がいいね！</div>
+  <div class="hint">💡 <code>x</code> は「プレイヤーのX座標（横の位置）」という意味の名前だよ。好きな名前をつけられるけど、わかりやすい名前がいいね！</div>
 </div>
 
 <!-- ========== STEP 3 ========== -->
@@ -382,7 +382,7 @@
 
   <div class="code-block">
     <button class="copy-btn">コピー</button>
-    <pre><code><span class="func">ellipse</span>(playerX, playerY, <span class="number">36</span>, <span class="number">44</span>);</code></pre>
+    <pre><code><span class="func">ellipse</span>(x, y, <span class="number">36</span>, <span class="number">44</span>);</code></pre>
   </div>
 
   <p>これだけだと、前回と同じで自機は止まったまま。でも準備は OK！</p>
@@ -391,16 +391,16 @@
 <!-- ========== STEP 4 ========== -->
 <div class="step" id="step4">
   <h2 class="step-title"><span class="step-num">4</span> 変数の中身を変える → 動く！</h2>
-  <p>ここがポイント！<code>draw()</code> の中で、毎フレーム <code>playerX</code> に <code>1</code> を足してみよう：</p>
+  <p>ここがポイント！<code>draw()</code> の中で、毎フレーム <code>x</code> に <code>1</code> を足してみよう：</p>
 
   <div class="code-block">
     <button class="copy-btn">コピー</button>
-    <pre><code>playerX = playerX + <span class="number">1</span>;  <span class="comment">// 毎フレーム右に1ピクセル動く！</span></code></pre>
+    <pre><code>x = x + <span class="number">1</span>;  <span class="comment">// 毎フレーム右に1ピクセル動く！</span></code></pre>
   </div>
 
-  <p><code>draw()</code> は1秒に約60回動くから、毎回 <code>playerX</code> が <code>1</code> ずつ増えて、自機がどんどん右に動いていくよ！</p>
+  <p><code>draw()</code> は1秒に約60回動くから、毎回 <code>x</code> が <code>1</code> ずつ増えて、自機がどんどん右に動いていくよ！</p>
 
-  <div class="hint">💡 <code>playerX = playerX + 1</code> は「今の playerX に 1 を足して、また playerX に入れ直す」という意味。箱の中身を取り出して、1を足して、また箱に戻すイメージだね。</div>
+  <div class="hint">💡 <code>x = x + 1</code> は「今の x に 1 を足して、また x に入れ直す」という意味。箱の中身を取り出して、1を足して、また箱に戻すイメージだね。</div>
 </div>
 
 <!-- ========== STEP 5 ========== -->
@@ -409,9 +409,9 @@
   <p><code>+ 1</code> の部分を変えると、動き方が変わるよ：</p>
 
   <div class="try-it">
-    <code>playerX = playerX + 1</code> を <code>playerX = playerX + 3</code> にしたらどうなる？<br>
+    <code>x = x + 1</code> を <code>x = x + 3</code> にしたらどうなる？<br>
     <code>-1</code> にしたら？<br>
-    <code>playerY</code> を変えてみたら？
+    <code>y</code> を変えてみたら？
   </div>
 </div>
 
@@ -462,15 +462,15 @@ document.getElementById('open-demo').addEventListener('click', function() {
 
   /* p5 インスタンス生成 */
   demoInstance = new p5(function(p) {
-    var playerX = 240, playerY = 580;
+    var x = 240, y = 580;
     p.setup = function() { p.createCanvas(480, 640); };
     p.draw = function() {
       p.background(10, 10, 30);
-      playerX = playerX + 1;
-      if (playerX > 500) playerX = -20;
+      x = x + 1;
+      if (x > 500) x = -20;
       p.fill(60, 180, 255);
       p.noStroke();
-      p.ellipse(playerX, playerY, 36, 44);
+      p.ellipse(x, y, 36, 44);
     };
   }, 'demo-container');
 

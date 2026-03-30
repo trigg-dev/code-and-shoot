@@ -372,14 +372,14 @@
   <div id="step2" class="step">
     <h3 class="step-title"><span class="step-number">2</span> ifの中にif（ネスト）</h3>
     <p>「もし左キーが押されていたら動く」だけだと、どこまでも動いちゃう。そこで、もうひとつ条件を追加しよう。</p>
-    <p><strong>「もし左キーが押されていたら、さらに、もし playerX が 20 より大きかったら動く」</strong></p>
-    <p>こうすれば、<code>playerX</code> が 20 以下になったら動かなくなる＝端で止まる！</p>
+    <p><strong>「もし左キーが押されていたら、さらに、もし x が 20 より大きかったら動く」</strong></p>
+    <p>こうすれば、<code>x</code> が 20 以下になったら動かなくなる＝端で止まる！</p>
     <div class="code-block">
       <button class="copy-btn">コピー</button>
 <pre><code><span class="keyword">if</span> (<span class="func">keyIsDown</span>(<span class="number">LEFT_ARROW</span>)) {
   <span class="comment">// さらに条件を追加！</span>
-  <span class="keyword">if</span> (playerX > <span class="number">20</span>) {
-    playerX = playerX - playerSpeed;
+  <span class="keyword">if</span> (x > <span class="number">20</span>) {
+    x = x - 4;
   }
 }</code></pre>
     </div>
@@ -394,10 +394,10 @@
     <p><code>ellipse</code> は中心の座標で描くから、端にちょうど止めるには半分のサイズぶんだけ余裕が必要だね。</p>
     <p>ざっくり計算すると：</p>
     <ul style="margin: 12px 0 12px 24px; line-height: 2.2;">
-      <li><strong>左の端</strong>：<code>playerX > 20</code>（36の半分 ≒ 18、ちょっと余裕をもって20）</li>
-      <li><strong>右の端</strong>：<code>playerX < 460</code>（480 - 20）</li>
-      <li><strong>上の端</strong>：<code>playerY > 20</code>（44の半分 ≒ 22、ちょっと余裕をもって20）</li>
-      <li><strong>下の端</strong>：<code>playerY < 620</code>（640 - 20）</li>
+      <li><strong>左の端</strong>：<code>x > 20</code>（36の半分 ≒ 18、ちょっと余裕をもって20）</li>
+      <li><strong>右の端</strong>：<code>x < 460</code>（480 - 20）</li>
+      <li><strong>上の端</strong>：<code>y > 20</code>（44の半分 ≒ 22、ちょっと余裕をもって20）</li>
+      <li><strong>下の端</strong>：<code>y < 620</code>（640 - 20）</li>
     </ul>
     <div class="try-it">数字を変えてみよう！たとえば 20 を 50 にすると、もっと内側で止まるよ。</div>
   </div>
@@ -407,13 +407,13 @@
     <h3 class="step-title"><span class="step-number">4</span> 残りの方向も書いてみよう</h3>
     <p>左のチェックはステップ2で書いたね。同じパターンで残りの3方向も書いてみよう！</p>
 
-    <div class="challenge">右の端は <code>playerX < 460</code> で止まるよ。同じように書いてみよう！</div>
+    <div class="challenge">右の端は <code>x < 460</code> で止まるよ。同じように書いてみよう！</div>
 
-    <div class="challenge">上下も同じパターンで書いてみよう！上の端は <code>playerY > 20</code>、下の端は <code>playerY < 620</code> だよ。</div>
+    <div class="challenge">上下も同じパターンで書いてみよう！上の端は <code>y > 20</code>、下の端は <code>y < 620</code> だよ。</div>
 
     <div class="hint">💡 パターンは全部同じ！外側の <code>if</code> でキーを調べて、内側の <code>if</code> で端チェック。方向と比べる数字が違うだけだよ。</div>
 
-    <div class="try-it"><code>playerSpeed</code> を 8 にして、端ギリギリの動きを確認してみよう！</div>
+    <div class="try-it">スピードの <code>4</code> を <code>8</code> にして、端ギリギリの動きを確認してみよう！</div>
   </div>
 
   <!-- デモ -->
@@ -449,7 +449,7 @@ function openDemo() {
   document.getElementById('demo-modal').style.display = 'flex';
   if (!demoInstance) {
     demoInstance = new p5(function(p) {
-      let playerX = 240, playerY = 580, playerSpeed = 4;
+      let x = 240, y = 580;
       p.setup = function() { p.createCanvas(480, 640); };
       p.draw = function() {
         p.background(10, 10, 30);
@@ -465,19 +465,19 @@ function openDemo() {
           p.ellipse(sx, sy, ss, ss);
         }
 
-        if (p.keyIsDown(p.LEFT_ARROW) && playerX > 20) playerX -= playerSpeed;
-        if (p.keyIsDown(p.RIGHT_ARROW) && playerX < 460) playerX += playerSpeed;
-        if (p.keyIsDown(p.UP_ARROW) && playerY > 20) playerY -= playerSpeed;
-        if (p.keyIsDown(p.DOWN_ARROW) && playerY < 620) playerY += playerSpeed;
+        if (p.keyIsDown(p.LEFT_ARROW) && x > 20) x -= 4;
+        if (p.keyIsDown(p.RIGHT_ARROW) && x < 460) x += 4;
+        if (p.keyIsDown(p.UP_ARROW) && y > 20) y -= 4;
+        if (p.keyIsDown(p.DOWN_ARROW) && y < 620) y += 4;
 
         // プレイヤー
         p.fill(60, 180, 255);
         p.noStroke();
-        p.ellipse(playerX, playerY, 36, 44);
+        p.ellipse(x, y, 36, 44);
 
         // エンジンの光
         p.fill(100, 200, 255, 150);
-        p.ellipse(playerX, playerY + 20, 12, 8);
+        p.ellipse(x, y + 20, 12, 8);
       };
     }, 'demo-container');
   }

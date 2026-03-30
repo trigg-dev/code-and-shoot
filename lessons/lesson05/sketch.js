@@ -4,9 +4,8 @@
 // =====================
 
 // === プレイヤー ===
-let playerX = 240;
-let playerY = 580;
-let playerSpeed = 4;
+let x = 240;
+let y = 580;
 
 function setup() {
   createCanvas(480, 640);
@@ -17,28 +16,28 @@ function draw() {
 
   // --- プレイヤー操作（端チェックつき） ---
   if (keyIsDown(LEFT_ARROW)) {
-    if (playerX > 20) {
-      playerX = playerX - playerSpeed;
+    if (x > 20) {
+      x = x - 4;
     }
   }
   if (keyIsDown(RIGHT_ARROW)) {
-    if (playerX < 460) {
-      playerX = playerX + playerSpeed;
+    if (x < 460) {
+      x = x + 4;
     }
   }
   if (keyIsDown(UP_ARROW)) {
-    if (playerY > 20) {
-      playerY = playerY - playerSpeed;
+    if (y > 20) {
+      y = y - 4;
     }
   }
   if (keyIsDown(DOWN_ARROW)) {
-    if (playerY < 620) {
-      playerY = playerY + playerSpeed;
+    if (y < 620) {
+      y = y + 4;
     }
   }
 
   // --- 描画: プレイヤー ---
   fill(60, 180, 255);
   noStroke();
-  ellipse(playerX, playerY, 36, 44);
+  ellipse(x, y, 36, 44);
 }

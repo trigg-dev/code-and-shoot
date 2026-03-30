@@ -404,8 +404,8 @@
 <pre><code><span class="keyword">if</span> (<span class="func">keyIsDown</span>(<span class="number">32</span>)) {
   <span class="keyword">if</span> (!bulletActive) {
     bulletActive = <span class="keyword">true</span>;        <span class="comment">// 弾を「飛んでる」にする</span>
-    bulletX = playerX;            <span class="comment">// プレイヤーの位置から発射</span>
-    bulletY = playerY - <span class="number">20</span>;      <span class="comment">// ちょっと上から</span>
+    bulletX = x;                  <span class="comment">// プレイヤーの位置から発射</span>
+    bulletY = y - <span class="number">20</span>;             <span class="comment">// ちょっと上から</span>
   }
 }</code></pre>
     </div>
@@ -475,22 +475,22 @@ function openDemo() {
   document.getElementById('demo-modal').classList.remove('hidden');
   if (!demoInstance) {
     demoInstance = new p5(function(p) {
-      let playerX = 240, playerY = 580, playerSpeed = 4;
+      let x = 240, y = 580;
       let bulletX = 0, bulletY = 0, bulletSpeed = 6, bulletActive = false;
       p.setup = function() { p.createCanvas(480, 640); };
       p.draw = function() {
         p.background(10, 10, 30);
-        if (p.keyIsDown(p.LEFT_ARROW) && playerX > 20) playerX -= playerSpeed;
-        if (p.keyIsDown(p.RIGHT_ARROW) && playerX < 460) playerX += playerSpeed;
-        if (p.keyIsDown(p.UP_ARROW) && playerY > 20) playerY -= playerSpeed;
-        if (p.keyIsDown(p.DOWN_ARROW) && playerY < 620) playerY += playerSpeed;
+        if (p.keyIsDown(p.LEFT_ARROW) && x > 20) x -= 4;
+        if (p.keyIsDown(p.RIGHT_ARROW) && x < 460) x += 4;
+        if (p.keyIsDown(p.UP_ARROW) && y > 20) y -= 4;
+        if (p.keyIsDown(p.DOWN_ARROW) && y < 620) y += 4;
         if (p.keyIsDown(32) && !bulletActive) {
-          bulletActive = true; bulletX = playerX; bulletY = playerY - 20;
+          bulletActive = true; bulletX = x; bulletY = y - 20;
         }
         if (bulletActive) bulletY -= bulletSpeed;
         if (bulletY < 0) bulletActive = false;
         p.fill(60, 180, 255); p.noStroke();
-        p.ellipse(playerX, playerY, 36, 44);
+        p.ellipse(x, y, 36, 44);
         if (bulletActive) { p.fill(255, 255, 100); p.ellipse(bulletX, bulletY, 6, 12); }
       };
     }, 'demo-container');
