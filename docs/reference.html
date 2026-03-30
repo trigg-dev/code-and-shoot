@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>p5.js リファレンス｜スペース★サバイバー</title>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;900&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0e1a;
+    --card: #141828;
+    --card-border: #1e2744;
+    --accent: #3db8ff;
+    --accent-dim: #1a5a8a;
+    --yellow: #ffe066;
+    --green: #6cdb8a;
+    --pink: #ff6b9d;
+    --orange: #ffa44f;
+    --text: #c8d6e5;
+    --text-bright: #eef2f7;
+    --code-bg: #0d1120;
+    --tag-bg: #1a2340;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    padding: 0 0 80px 0;
+  }
+
+  /* --- ヘッダー --- */
+  .header {
+    text-align: center;
+    padding: 60px 20px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(61,184,255,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header h1 {
+    font-size: 2.4em;
+    font-weight: 900;
+    color: var(--text-bright);
+    letter-spacing: 0.02em;
+  }
+  .header h1 span { color: var(--accent); }
+  .header p {
+    margin-top: 8px;
+    font-size: 1.05em;
+    color: var(--text);
+    opacity: 0.7;
+  }
+
+  /* --- ナビ --- */
+  .nav {
+    max-width: 900px;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+  .nav a {
+    display: inline-block;
+    padding: 6px 16px;
+    background: var(--tag-bg);
+    color: var(--accent);
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 0.9em;
+    font-weight: 700;
+    transition: background 0.2s;
+  }
+  .nav a:hover {
+    background: var(--accent-dim);
+    color: #fff;
+  }
+
+  /* --- メインコンテンツ --- */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* --- セクション --- */
+  .section {
+    margin-bottom: 48px;
+  }
+  .section-title {
+    font-size: 1.5em;
+    font-weight: 900;
+    color: var(--text-bright);
+    padding-bottom: 12px;
+    margin-bottom: 24px;
+    border-bottom: 2px solid var(--card-border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title .icon {
+    font-size: 1.2em;
+  }
+
+  /* --- カード --- */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .card-name {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 1.2em;
+    font-weight: 600;
+    color: var(--yellow);
+    margin-bottom: 4px;
+  }
+  .card-desc {
+    font-size: 1em;
+    margin-bottom: 14px;
+    color: var(--text);
+  }
+  .card-desc strong {
+    color: var(--text-bright);
+  }
+
+  /* --- 引数テーブル --- */
+  .args {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 14px;
+    font-size: 0.92em;
+  }
+  .args th {
+    text-align: left;
+    padding: 6px 12px;
+    background: var(--code-bg);
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.85em;
+    letter-spacing: 0.04em;
+  }
+  .args td {
+    padding: 6px 12px;
+    border-bottom: 1px solid var(--card-border);
+  }
+  .args td:first-child {
+    font-family: 'Source Code Pro', monospace;
+    color: var(--orange);
+    white-space: nowrap;
+  }
+
+  /* --- コード --- */
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    overflow-x: auto;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.92em;
+    line-height: 1.7;
+    color: var(--text);
+  }
+  pre .comment { color: #5a6a8a; }
+  pre .keyword { color: var(--pink); }
+  pre .func { color: var(--yellow); }
+  pre .number { color: var(--green); }
+  pre .string { color: var(--orange); }
+
+  code {
+    font-family: 'Source Code Pro', monospace;
+    background: var(--code-bg);
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 0.92em;
+    color: var(--yellow);
+  }
+
+  /* --- タグ --- */
+  .tag {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-size: 0.78em;
+    font-weight: 700;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+  .tag-basic { background: #1a3a2a; color: var(--green); }
+  .tag-mid   { background: #2a2a1a; color: var(--yellow); }
+  .tag-adv   { background: #2a1a2a; color: var(--pink); }
+
+  /* --- ヒント --- */
+  .hint {
+    background: #1a1e30;
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    margin-top: 14px;
+    font-size: 0.92em;
+  }
+  .hint::before {
+    content: '💡 ';
+  }
+
+  /* --- レスポンシブ --- */
+  @media (max-width: 600px) {
+    .header h1 { font-size: 1.6em; }
+    .card { padding: 16px; }
+    pre { font-size: 0.82em; padding: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ========== ヘッダー ========== -->
+<div class="header">
+  <h1><span>p5.js</span> リファレンス</h1>
+  <p>スペース★サバイバーで使う命令まとめ</p>
+</div>
+
+<!-- ========== ナビ ========== -->
+<div class="nav">
+  <a href="#kihon">きほん</a>
+  <a href="#drawing">図形をかく</a>
+  <a href="#color">色をぬる</a>
+  <a href="#variables">変数</a>
+  <a href="#if">もし〜なら</a>
+  <a href="#input">キー入力</a>
+  <a href="#math">計算・ランダム</a>
+  <a href="#text">文字を出す</a>
+  <a href="#array">配列</a>
+  <a href="#loop">くりかえし</a>
+  <a href="#function">関数をつくる</a>
+</div>
+
+<div class="container">
+
+<!-- ========================================= -->
+<!-- きほん -->
+<!-- ========================================= -->
+<div class="section" id="kihon">
+  <h2 class="section-title"><span class="icon">🚀</span> きほん</h2>
+
+  <div class="card">
+    <div class="card-name">createCanvas(よこ, たて)</div>
+    <div class="card-desc">画面（キャンバス）をつくる。<strong>setup() の中</strong>で1回だけ使う。</div>
+    <table class="args">
+      <tr><th>引数</th><th>意味</th></tr>
+      <tr><td>よこ</td><td>画面の横の大きさ（ピクセル）</td></tr>
+      <tr><td>たて</td><td>画面のたての大きさ（ピクセル）</td></tr>
+    </table>
+    <pre><span class="keyword">function</span> <span class="func">setup</span>() {
+  <span class="func">createCanvas</span>(<span class="number">480</span>, <span class="number">640</span>);
+}</pre>
+  </div>
+
+  <div class="card">
+    <div class="card-name">setup()</div>
+    <div class="card-desc">プログラムが始まるとき<strong>1回だけ</strong>動く場所。画面サイズなど、最初の準備を書く。</div>
+    <pre><span class="keyword">function</span> <span class="func">setup</span>() {
+  <span class="func">createCanvas</span>(<span class="number">480</span>, <span class="number">640</span>);
+}</pre>
+    <div class="hint">Scratchでいうと「🏁旗がクリックされたとき」と同じ！</div>
+  </div>
+
+  <div class="card">
+    <div class="card-name">draw()</div>
+    <div class="card-desc"><strong>1秒に約60回</strong>、ずっとくりかえし動く場所。ゲームのメイン処理を書く。</div>
+    <pre><span class="keyword">function</span> <span class="func">draw</span>() {
+  <span class="func">background</span>(<span class="number">10</span>, <span class="number">10</span>, <span class="number">30</span>);
+  <span class="func">ellipse</span>(<span class="number">240</span>, <span class="number">300</span>, <span class="number">50</span>);
+}</pre>
+    <div class="hint">Scratchでいうと「ずっと」ブロックと同じ！</div>
+  </div>
+
+  <div class="card">
+    <div class="card-name">background(r, g, b)</div>
+    <div class="card-desc">画面ぜんたいを塗りつぶす。<strong>draw() の最初</strong>に書くと、前のフレームを消してくれる。</div>
+    <table class="args">
+      <tr><th>引数</th><th>意味</th></tr>
+      <tr><td>r</td><td>赤の強さ（0〜255）</td></tr>
+      <tr><td>g</td><td>緑の強さ（0〜255）</td></tr>
+      <tr><td>b</td><td>青の強さ（0〜255）</td></tr>
+    </table>
+    <pre><span class="func">background</span>(<span class="number">10</span>, <span class="number">10</span>, <span class="number">30</span>);   <span class="comment">// 暗い宇宙っぽい色</span>
+<span class="func">background</span>(<span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>);    <span class="comment">// 真っ赤</span>
+<span class="func">background</span>(<span class="number">0</span>);             <span class="comment">// 真っ黒（1つだけでもOK）</span></pre>
+  </div>
+</div>
+
+<!-- ========================================= -->
+<!-- 図形をかく -->
+<!-- ========================================= -->
+<div class="section" id="drawing">
+  <h2 class="section-title"><span class="icon">⭕</span> 図形をかく</h2>
+
+  <div class="card">
+    <div class="card-name">ellipse(x, y, よこ幅, たて幅)</div>
+    <div class="card-desc">丸（楕円）をかく。<strong>x, y は丸の中心</strong>の位置。</div>
+    <table class="args">
+      <tr><th>引数</th><th>意味</th></tr>
+      <tr><td>x</td><td>中心の横の位置</td></tr>
+      <tr><td>y</td><td>中心のたての位置</td></tr>
+      <tr><td>よこ幅</td><td>横の大きさ</td></tr>
+      <tr><td>たて幅</td><td>たての大きさ（省略するとまん丸）</td></tr>
+    </table>
+    <pre><span class="func">ellipse</span>(<span class="number">240</span>, <span class="number">300</span>, <span class="number">50</span>);        <span class="comment">// まん丸（直径50）</span>
+<span class="func">ellipse</span>(<span class="number">240</span>, <span class="number">300</span>, <span class="number">60</span>, <span class="number">40</span>);    <span class="comment">// 横長の楕円</span></pre>
+  </div>
+
+  <div class="card">
+    <div class="card-name">rect(x, y, よこ幅, たて幅)</div>
+    <div class="card-desc">四角をかく。<strong>x, y は左上の角</strong>の位置。</div>
+    <table class="args">
+      <tr><th>引数</th><th>意味</th></tr>
+      <tr><td>x</td><td>左上の横の位置</td></tr>
+      <tr><td>y</td><td>左上のたての位置</td></tr>
+      <tr><td>よこ幅</td><td>横の大きさ</td></tr>
+      <tr><td>たて幅</td><td>たての大きさ</td></tr>
+    </table>
+    <pre><span class="func">rect</span>(<span class="number">100</span>, <span class="number">200</span>, <span class="number">80</span>, <span class="number">60</span>);   <span class="comment">// 横80×たて60の四角</span></pre>
+  </div>
+
+  <div class="card">
+    <div class="card-name">triangle(x1, y1, x2, y2, x3, y3) <span class="tag tag-adv">応用</span></div>
+    <div class="card-desc">三角形をかく。3つの角の位置（x, y）を指定する。</div>
+    <table class="args">
+      <tr><th>引数</th><th>意味</th></tr>
+      <tr><td>x1, y1</td><td>1つ目の角の位置</td></tr>
+      <tr><td>x2, y2</td><td>2つ目の角の位置</td></tr>
+      <tr><td>x3, y3</td><td>3つ目の角の位置</td></tr>
+    </table>
+    <pre><span class="func">triangle</span>(<span class="number">240</span>,<span class="number">100</span>, <span class="number">200</span>,<span class="number">200</span>, <span class="number">280</span>,<span class="number">200</span>); <span class="comment">// 上向き三角</span></pre>
+  </div>
+
+  <div class="card">
+    <div class="card-name">line(x1, y1, x2, y2)</div>
+    <div class="card-desc">2つの点をつなぐ直線をひく。</div>
+    <pre><span class="func">line</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">480</span>, <span class="number">640</span>);   <span class="comment">// 左上から右下へ線をひく</span></pre>
+  </div>
+</div>
+
+<!-- ========================================= -->
+<!-- 色をぬる -->
+<!-- ========================================= -->
+<div class="section" id="color">
+  <h2 class="section-title"><span class="icon">🎨</span> 色をぬる</h2>
+
+  <div class="card">
+    <div class="card-name">fill(r, g, b)</div>
+    <div class="card-desc">これより<strong>後に描く図形</strong>の中身の色を決める。</div>
+    <pre><span class="func">fill</span>(<span class="number">60</span>, <span class="number">180</span>, <span class="number">255</span>);    <span class="comment">// 水色</span>
+<span class="func">ellipse</span>(<span class="number">240</span>, <span class="number">300</span>, <span class="number">50</span>); <span class="comment">// この丸が水色になる</span>
+
+<span class="func">fill</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">100</span>);   <span class="comment">// 黄色</span>
+<span class="func">ellipse</span>(<span class="number">100</span>, <span class="number">300</span>, <span class="number">30</span>); <span class="comment">// この丸は黄色になる</span></pre>
+    <div class="hint">fill は「塗る」という意味。図形の「前」に書くのがポイント！</div>
+  </div>
+
+  <div class="card">
+    <div class="card-name">noStroke()</div>
+    <div class="card-desc">図形のフチの線を消す。</div>
+    <pre><span class="func">noStroke</span>();              <span class="comment">// フチなし</span>
+<span class="func">ellipse</span>(<span class="number">240</span>, <span class="number">300</span>, <span class="number">50</span>); <span class="comment">// フチのない丸</span></pre>
+  </div>
+
+  <div class="card">
+    <div class="card-name">stroke(r, g, b)</div>
+    <div class="card-desc">図形のフチの色を決める。</div>
+    <pre><span class="func">stroke</span>(<span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>);     <span class="comment">// フチを赤に</span></pre>
+  </div>
+</div>
+
+<!-- ========================================= -->
+<!-- 座標のしくみ -->
+<!-- ========================================= -->
+<div class="section">
+  <h2 class="section-title"><span class="icon">📍</span> 座標のしくみ</h2>
+
+  <div class="card">
+    <div class="card-desc">
+      p5.js の画面は<strong>左上が (0, 0)</strong>。<br>
+      <strong>右にいくほど x が増える</strong>。<br>
+      <strong>下にいくほど y が増える</strong>（Scratchとは逆！）。
+    </div>
+    <pre>
+(0, 0) ─────────→ x が増える (480, 0)
+  │
+  │
+  │    (240, 320) ← 画面のまんなか
+  │
+  ↓
+ y が増える
+(0, 640)                         (480, 640)
+</pre>
+    <div class="hint">Scratchでは上にいくとyが増えるけど、p5.jsは逆！ 下にいくとyが増えるよ。</div>
+  </div>
+</div>
+
+<!-- ========================================= -->
+<!-- 変数 -->
+<!-- ========================================= -->
+<div class="section" id="variables">
+  <h2 class="section-title"><span class="icon">📦</span> 変数（へんすう）</h2>
+
+  <div class="card">
+    <div class="card-name">let 名前 = 値;</div>
+    <div class="card-desc">データを入れる<strong>箱</strong>をつくる。名前をつけて、中に値を入れる。</div>
+    <pre><span class="keyword">let</span> playerX = <span class="number">240</span>;    <span class="comment">// playerXという箱に240を入れる</span>
+<span class="keyword">let</span> speed = <span class="number">4</span>;         <span class="comment">// speedという箱に4を入れる</span>
+<span class="keyword">let</span> alive = <span class="keyword">true</span>;      <span class="comment">// aliveという箱にtrueを入れる</span></pre>
+    <div class="hint">Scratchの「変数を作る」と同じ！ <code>=</code> は「等しい」じゃなくて「入れる」という意味だよ。</div>
+  </div>
+
+  <div class="card">
+    <div class="card-name">変数の更新</div>
+    <div class="card-desc">箱の中身を書きかえる。<strong>draw() の中で書きかえると、毎フレーム変わる</strong>から動きになる！</div>
+    <pre>playerX = playerX + <span class="number">1</span>;   <span class="comment">// 右に1ずつ動く</span>
+playerX = playerX - <span class="number">3</span>;   <span class="comment">// 左に3ずつ動く</span>
+score = score + <span class="number">1</span>;       <span class="comment">// スコアを1増やす</span></pre>
+  </div>
+
+  <div class="card">
+    <div class="card-name">true と false</div>
+    <div class="card-desc">「はい」か「いいえ」だけの特別な値。スイッチのON/OFFみたいなもの。</div>
+    <pre><span class="keyword">let</span> bulletActive = <span class="keyword">false</span>;  <span class="comment">// 最初は弾が出ていない</span>
+
+<span class="comment">// 発射するとき</span>
+bulletActive = <span class="keyword">true</span>;           <span class="comment">// 弾が出ている状態にする</span>
+
+<span class="comment">// 画面の外に出たら</span>
+bulletActive = <span class="keyword">false</span>;          <span class="comment">// 弾を消す</span></pre>
+  </div>
+</div>
+
+<!-- ========================================= -->
+<!-- もし〜なら（if文） -->
+<!-- ========================================= -->
+<div class="section" id="if">
+  <h2 class="section-title"><span class="icon">🔀</span> もし〜なら（if文）</h2>
+
+  <div class="card">
+    <div class="card-name">if (条件) { }</div>
+    <div class="card-desc"><strong>条件が正しいとき</strong>だけ、{ } の中が動く。</div>
+    <pre><span class="keyword">if</span> (score > <span class="number">100</span>) {
+  <span class="comment">// スコアが100より大きいときだけ動く</span>
+}</pre>
+    <div class="hint">Scratchの「もし〜なら」ブロックと同じ！</div>
+  </div>
+
+  <div class="card">
+    <div class="card-name">くらべる記号</div>
+    <div class="card-desc">if の中で使う記号まとめ。</div>
+    <table class="args">
+      <tr><th>記号</th><th>意味</th><th>れい</th></tr>
+      <tr><td>===</td><td>同じ</td><td><code>score === 0</code></td></tr>
+      <tr><td>!==</td><td>同じじゃない</td><td><code>state !== "gameover"</code></td></tr>
+      <tr><td>&gt;</td><td>より大きい</td><td><code>playerX > 460</code></td></tr>
+      <tr><td>&lt;</td><td>より小さい</td><td><code>bulletY < 0</code></td></tr>
+      <tr><td>&gt;=</td><td>以上</td><td><code>speed >= 5</code></td></tr>
+      <tr><td>&lt;=</td><td>以下</td><td><code>playerX <= 20</code></td></tr>
+    </table>
+    <div class="hint"><code>=</code> は「入れる」、<code>===</code> は「同じかくらべる」。まちがえやすいから注意！</div>
+  </div>
+
+  <div class="card">
+    <div class="card-name">if の中に if（ネスト）</div>
+    <div class="card-desc">条件の中にさらに条件を書ける。「〜して、さらに〜なら」。</div>
+    <pre><span class="keyword">if</span> (<span class="func">keyIsDown</span>(LEFT_ARROW)) {
+  <span class="keyword">if</span> (playerX > <span class="number">20</span>) {
+    playerX = playerX - speed;
+  }
+}</pre>
+    <div class="hint">「左キーが押されていて、さらに左端じゃなければ動く」という意味！</div>
+  </div>
+
+  <div class="card">
+    <div class="card-name">! （ひっくり返す）</div>
+    <div class="card-desc"><code>!</code> をつけると、true と false がひっくり返る。</div>
+    <pre><span class="keyword">if</span> (!bulletActive) {
+  <span class="comment">// bulletActive が false のときだけ動く</span>
+  <span class="comment">// つまり「弾が出てないときだけ」</span>
+}</pre>
+  </div>
+</div>
+
+<!-- ========================================= -->
+<!-- キー入力 -->
+<!-- ========================================= -->
+<div class="section" id="input">
+  <h2 class="section-title"><span class="icon">⌨️</span> キー入力</h2>
+
+  <div class="card">
+    <div class="card-name">keyIsDown(キーの番号)</div>
+    <div class="card-desc">キーが<strong>押されている間ずっと</strong> true になる。draw() の中で使う。</div>
+    <table class="args">
+      <tr><th>キー</th><th>書き方</th></tr>
+      <tr><td>← 左</td><td><code>keyIsDown(LEFT_ARROW)</code></td></tr>
+      <tr><td>→ 右</td><td><code>keyIsDown(RIGHT_ARROW)</code></td></tr>
+      <tr><td>↑ 上</td><td><code>keyIsDown(UP_ARROW)</code></td></tr>
+      <tr><td>↓ 下</td><td><code>keyIsDown(DOWN_ARROW)</code></td></tr>
+      <tr><td>スペース</td><td><code>keyIsDown(32)</code></td></tr>
+    </table>
+    <pre><span class="keyword">if</span> (<span class="func">keyIsDown</span>(LEFT_ARROW)) {
+  playerX = playerX - speed;
+}
+<span class="keyword">if</span> (<span class="func">keyIsDown</span>(<span class="number">32</span>)) {
+  <span class="comment">// スペースキーが押されている</span>
+}</pre>
+    <div class="hint">移動にも発射にも使える万能な命令！</div>
+  </div>
+</div>
+
+<!-- ========================================= -->
+<!-- 計算・ランダム -->
+<!-- ========================================= -->
+<div class="section" id="math">
+  <h2 class="section-title"><span class="icon">🎲</span> 計算・ランダム</h2>
+
+  <div class="card">
+    <div class="card-name">random(最小, 最大)</div>
+    <div class="card-desc"><strong>最小〜最大の間</strong>のランダムな数字を返す。サイコロみたいなもの。</div>
+    <pre><span class="keyword">let</span> x = <span class="func">random</span>(<span class="number">0</span>, <span class="number">480</span>);      <span class="comment">// 0〜480のどこか</span>
+<span class="keyword">let</span> size = <span class="func">random</span>(<span class="number">20</span>, <span class="number">50</span>);    <span class="comment">// 20〜50のどこか</span>
+<span class="keyword">let</span> speed = <span class="func">random</span>(<span class="number">2</span>, <span class="number">8</span>);     <span class="comment">// 2〜8のどこか</span></pre>
+  </div>
+
+  <div class="card">
+    <div class="card-name">dist(x1, y1, x2, y2)</div>
+    <div class="card-desc">2つの点がどれくらい<strong>離れているか</strong>を計算する。当たり判定で使う！</div>
+    <pre><span class="keyword">let</span> d = <span class="func">dist</span>(playerX, playerY, enemyX, enemyY);
+<span class="keyword">if</span> (d < <span class="number">30</span>) {
+  <span class="comment">// 30ピクセルより近い → ぶつかった！</span>
+}</pre>
+    <div class="hint">2つの丸が近すぎたら「当たった」と判定するよ。</div>
+  </div>
+
+  <div class="card">
+    <div class="card-name">frameCount</div>
+    <div class="card-desc">プログラムが始まってから<strong>何フレーム経ったか</strong>の数字。勝手に増えていく。</div>
+    <pre><span class="comment">// 60フレームごとに何かする（約1秒ごと）</span>
+<span class="keyword">if</span> (frameCount % <span class="number">60</span> === <span class="number">0</span>) {
+  <span class="comment">// 1秒たった！</span>
+}</pre>
+    <div class="hint"><code>%</code> は「割った余り」。60で割って余りが0 → ちょうど60の倍数のとき。</div>
+  </div>
+</div>
+
+<!-- ========================================= -->
+<!-- 文字を出す -->
+<!-- ========================================= -->
+<div class="section" id="text">
+  <h2 class="section-title"><span class="icon">✏️</span> 文字を出す</h2>
+
+  <div class="card">
+    <div class="card-name">text(内容, x, y)</div>
+    <div class="card-desc">画面に文字や数字を表示する。</div>
+    <pre><span class="func">text</span>(<span class="string">"GAME OVER"</span>, <span class="number">240</span>, <span class="number">300</span>);
+<span class="func">text</span>(<span class="string">"スコア: "</span> + score, <span class="number">10</span>, <span class="number">30</span>);</pre>
+  </div>
+
+  <div class="card">
+    <div class="card-name">textSize(大きさ)</div>
+    <div class="card-desc">文字の大きさを変える。</div>
+    <pre><span class="func">textSize</span>(<span class="number">32</span>);   <span class="comment">// 大きい文字</span>
+<span class="func">textSize</span>(<span class="number">14</span>);   <span class="comment">// 小さい文字</span></pre>
+  </div>
+
+  <div class="card">
+    <div class="card-name">textAlign(横, たて)</div>
+    <div class="card-desc">文字の位置ぞろえを決める。</div>
+    <pre><span class="func">textAlign</span>(CENTER, CENTER);   <span class="comment">// ど真ん中ぞろえ</span>
+<span class="func">textAlign</span>(LEFT, TOP);         <span class="comment">// 左上ぞろえ</span></pre>
+  </div>
+</div>
+
+<!-- ========================================= -->
+<!-- 配列 -->
+<!-- ========================================= -->
+<div class="section" id="array">
+  <h2 class="section-title"><span class="icon">🗄️</span> 配列（はいれつ）<span class="tag tag-mid">中級</span></h2>
+
+  <div class="card">
+    <div class="card-name">let 名前 = [];</div>
+    <div class="card-desc">データをたくさん入れられる<strong>リスト</strong>をつくる。ロッカーの棚みたいなもの。</div>
+    <pre><span class="keyword">let</span> bullets = [];   <span class="comment">// 空のリストをつくる</span></pre>
+  </div>
+
+  <div class="card">
+    <div class="card-name">配列.push(データ)</div>
+    <div class="card-desc">リストの<strong>最後に</strong>データを追加する。</div>
+    <pre>bullets.<span class="func">push</span>({
+  x: playerX,
+  y: playerY,
+  speed: <span class="number">6</span>
+});
+<span class="comment">// リストに弾丸1つ分のデータを追加</span></pre>
+  </div>
+
+  <div class="card">
+    <div class="card-name">配列[番号]</div>
+    <div class="card-desc">リストの中身を番号で取り出す。<strong>番号は0から始まる</strong>。</div>
+    <pre>bullets[<span class="number">0</span>]       <span class="comment">// リストの1番目</span>
+bullets[<span class="number">0</span>].x     <span class="comment">// 1番目の弾のx座標</span>
+bullets.length   <span class="comment">// リストに何個入ってるか</span></pre>
+  </div>
+
+  <div class="card">
+    <div class="card-name">配列.splice(番号, 個数)</div>
+    <div class="card-desc">リストから要素を<strong>引っこ抜く</strong>。</div>
+    <pre>bullets.<span class="func">splice</span>(i, <span class="number">1</span>);  <span class="comment">// i番目を1個抜く</span></pre>
+    <div class="hint">前からぬくと番号がズレるから、後ろからやると安全だよ。</div>
+  </div>
+
+  <div class="card">
+    <div class="card-name">{ } オブジェクト</div>
+    <div class="card-desc">いくつかのデータを<strong>1つのかたまり</strong>にまとめる。配列に入れるときに便利。</div>
+    <pre><span class="comment">// 弾丸1つ分のデータ</span>
+<span class="keyword">let</span> bullet = {
+  x: <span class="number">240</span>,
+  y: <span class="number">580</span>,
+  speed: <span class="number">6</span>
+};
+
+bullet.x      <span class="comment">// 240</span>
+bullet.speed  <span class="comment">// 6</span></pre>
+    <div class="hint">データに名前をつけてまとめるイメージ。名札みたいなもの！</div>
+  </div>
+</div>
+
+<!-- ========================================= -->
+<!-- くりかえし -->
+<!-- ========================================= -->
+<div class="section" id="loop">
+  <h2 class="section-title"><span class="icon">🔄</span> くりかえし（for ループ）<span class="tag tag-mid">中級</span></h2>
+
+  <div class="card">
+    <div class="card-name">for (let i = 0; i &lt; 回数; i++)</div>
+    <div class="card-desc">配列の<strong>全部に同じ処理</strong>をするときに使う。</div>
+    <pre><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i < bullets.length; i++) {
+  <span class="keyword">let</span> b = bullets[i];
+  b.y = b.y - b.speed;         <span class="comment">// 動かす</span>
+  <span class="func">ellipse</span>(b.x, b.y, <span class="number">6</span>, <span class="number">12</span>);   <span class="comment">// 描く</span>
+}</pre>
+    <div class="hint">i は「今何番目を見てるか」の番号。0から始まって1ずつ増える。</div>
+  </div>
+
+  <div class="card">
+    <div class="card-name">後ろからループ（消すとき用）</div>
+    <div class="card-desc">配列から要素を消すときは<strong>後ろから</strong>ループすると安全。</div>
+    <pre><span class="keyword">for</span> (<span class="keyword">let</span> i = bullets.length - <span class="number">1</span>; i >= <span class="number">0</span>; i--) {
+  <span class="keyword">let</span> b = bullets[i];
+  <span class="keyword">if</span> (b.y < <span class="number">0</span>) {
+    bullets.<span class="func">splice</span>(i, <span class="number">1</span>);  <span class="comment">// 画面外の弾を消す</span>
+  }
+}</pre>
+    <div class="hint">前から消すと番号がズレちゃう。後ろからなら安全！</div>
+  </div>
+</div>
+
+<!-- ========================================= -->
+<!-- 関数をつくる -->
+<!-- ========================================= -->
+<div class="section" id="function">
+  <h2 class="section-title"><span class="icon">🧩</span> 関数をつくる</h2>
+
+  <div class="card">
+    <div class="card-name">function 名前() { }</div>
+    <div class="card-desc">処理をまとめて<strong>名前をつける</strong>。同じ処理を何度も書かなくてよくなる。</div>
+    <pre><span class="comment">// 関数をつくる</span>
+<span class="keyword">function</span> <span class="func">drawPlayer</span>() {
+  <span class="func">fill</span>(<span class="number">60</span>, <span class="number">180</span>, <span class="number">255</span>);
+  <span class="func">ellipse</span>(playerX, playerY, <span class="number">36</span>, <span class="number">44</span>);
+}
+
+<span class="comment">// draw() の中で使う</span>
+<span class="keyword">function</span> <span class="func">draw</span>() {
+  <span class="func">background</span>(<span class="number">10</span>, <span class="number">10</span>, <span class="number">30</span>);
+  <span class="func">drawPlayer</span>();   <span class="comment">// 呼ぶだけでOK！</span>
+}</pre>
+    <div class="hint">Scratchの「ブロック定義」と同じ！ コードが整理されて読みやすくなるよ。</div>
+  </div>
+
+  <div class="card">
+    <div class="card-name">function 名前(引数) { }</div>
+    <div class="card-desc">関数にデータを<strong>渡す</strong>ことができる。引数（ひきすう）= 渡すデータ。</div>
+    <pre><span class="keyword">function</span> <span class="func">drawBullet</span>(x, y) {
+  <span class="func">fill</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">100</span>);
+  <span class="func">ellipse</span>(x, y, <span class="number">6</span>, <span class="number">12</span>);
+}
+
+<span class="comment">// 使うとき：位置を渡す</span>
+<span class="func">drawBullet</span>(<span class="number">240</span>, <span class="number">300</span>);
+<span class="func">drawBullet</span>(<span class="number">100</span>, <span class="number">500</span>);</pre>
+    <div class="hint">x, y は「仮の名前」。呼ぶときに実際の数字を入れると、その数字が使われる。</div>
+  </div>
+</div>
+
+<!-- ========================================= -->
+<!-- RGB カラーチャート -->
+<!-- ========================================= -->
+<div class="section">
+  <h2 class="section-title"><span class="icon">🌈</span> よく使う色</h2>
+
+  <div class="card">
+    <div class="card-desc">色は <code>fill(赤, 緑, 青)</code> で指定する。それぞれ 0〜255。</div>
+    <table class="args">
+      <tr><th>色</th><th>コード</th></tr>
+      <tr><td>⬛ 黒</td><td><code>fill(0, 0, 0)</code></td></tr>
+      <tr><td>⬜ 白</td><td><code>fill(255, 255, 255)</code></td></tr>
+      <tr><td>🟥 赤</td><td><code>fill(255, 0, 0)</code></td></tr>
+      <tr><td>🟩 緑</td><td><code>fill(0, 255, 0)</code></td></tr>
+      <tr><td>🟦 青</td><td><code>fill(0, 0, 255)</code></td></tr>
+      <tr><td>🟨 黄色</td><td><code>fill(255, 255, 0)</code></td></tr>
+      <tr><td>🔵 水色</td><td><code>fill(60, 180, 255)</code></td></tr>
+      <tr><td>🟧 オレンジ</td><td><code>fill(255, 165, 0)</code></td></tr>
+      <tr><td>🟪 紫</td><td><code>fill(128, 0, 255)</code></td></tr>
+    </table>
+    <div class="hint">数字を変えて実験しよう！ 自分だけの色を見つけてね。</div>
+  </div>
+</div>
+
+</div><!-- container -->
+
+</body>
+</html>
