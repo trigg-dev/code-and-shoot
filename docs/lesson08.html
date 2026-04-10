@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 08: 弾で敵を倒そう｜Code & Shoot</title>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;900&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/lesson.css">
+</head>
+<body>
+
+<header>
+  <span class="lesson-badge">LESSON 08</span>
+  <h1>弾で敵を<span>倒そう</span></h1>
+  <p>当たり判定とスコアでゲームらしくなるよ！</p>
+</header>
+
+<div class="page-layout">
+
+  <aside class="sidebar" aria-label="ページ内ナビ">
+    <nav>
+      <a href="#goal">今回のゴール</a>
+      <a href="#step1">1. 当たり判定って？</a>
+      <a href="#step2">2. dist() で距離</a>
+      <a href="#step3">3. 当たったら倒す</a>
+      <a href="#step4">4. スコアをつける</a>
+      <a href="#step5">5. やってみよう</a>
+      <a href="#challenge">発展チャレンジ</a>
+      <a href="#demo">デモ</a>
+    </nav>
+  </aside>
+
+  <main id="main-content">
+
+  <section id="goal" class="goal-section">
+    <h2>今回のゴール</h2>
+    <ul>
+      <li><code>dist()</code> で2つの丸の距離をはかる</li>
+      <li>弾が敵に当たったら敵を倒す「当たり判定」を作る</li>
+      <li>スコアを画面に表示する</li>
+    </ul>
+  </section>
+
+  <div id="step1" class="step">
+    <div class="step-header"><span class="step-number">1</span> <h2>弾が当たったらどうする？</h2></div>
+    <p>今のゲーム、弾を撃っても敵をすり抜けちゃうよね。シューティングゲームなのに倒せないなんて！</p>
+    <p>弾が敵に「当たった」ことをプログラムに教えてあげないといけない。でも、どうやって？</p>
+    <div class="info-card">
+      <h3>「当たった」ってどういうこと？</h3>
+      <p>弾も敵も丸（<code>ellipse</code>）で描いてるよね。<strong>2つの丸が近づいて重なったら「当たった」</strong>と考えるよ。</p>
+      <p>つまり、弾の位置と敵の位置が<strong>近いかどうか</strong>を調べればいいんだ！</p>
+    </div>
+  </div>
+
+  <div id="step2" class="step">
+    <div class="step-header"><span class="step-number">2</span> <h2>dist() で距離をはかろう</h2></div>
+    <p>p5.js には <code>dist()</code> という便利な命令があるよ。<strong>2つの点がどれくらい離れているか</strong>を計算してくれる。</p>
+    <div class="code-block">
+      <button class="copy-btn" aria-label="コードをコピー">コピー</button>
+<pre><code><span class="keyword">let</span> d = <span class="func">dist</span>(bulletX, bulletY, enemyX, enemyY);</code></pre>
+    </div>
+    <p>これで変数 <code>d</code> に「弾と敵の間の距離」が入る。<code>d</code> が小さいほど近いってことだね。</p>
+    <p>弾の半径はだいたい 3、敵の半径は 18。合わせると 21 だけど、ざっくり <code>d < 20</code> で「当たった！」と判定しよう。</p>
+    <div class="hint-box">💡 <code>dist(x1, y1, x2, y2)</code> は、点(x1, y1) と点(x2, y2) の直線距離を返すよ。数学でいう「ピタゴラスの定理」を勝手に計算してくれるんだ。</div>
+  </div>
+
+  <div id="step3" class="step">
+    <div class="step-header"><span class="step-number">3</span> <h2>当たったら敵を倒そう</h2></div>
+    <p>距離がはかれたら、あとは <code>if</code> で「近かったら何かする」を書くだけ！</p>
+    <p>当たったときにやることは2つ：</p>
+    <ul class="step-list">
+      <li><strong>弾を消す</strong> → <code>bulletActive = false</code></li>
+      <li><strong>敵をリスポーン</strong> → 前回と同じ、上に戻してランダム位置</li>
+    </ul>
+    <div class="code-block">
+      <button class="copy-btn" aria-label="コードをコピー">コピー</button>
+<pre><code><span class="keyword">if</span> (bulletActive && enemyActive) {
+  <span class="keyword">let</span> d = <span class="func">dist</span>(bulletX, bulletY, enemyX, enemyY);
+  <span class="keyword">if</span> (d < <span class="number">20</span>) {
+    bulletActive = <span class="keyword">false</span>;
+    enemyX = <span class="func">random</span>(<span class="number">20</span>, <span class="number">460</span>);
+    enemyY = <span class="number">-20</span>;
+    enemySpeed = <span class="func">random</span>(<span class="number">1</span>, <span class="number">4</span>);
+  }
+}</code></pre>
+    </div>
+    <p>これを <code>draw()</code> の中、敵の移動処理のあとに書こう。</p>
+    <div class="hint-box">💡 <code>&&</code> は「〜かつ〜」の意味。弾が飛んでいて、かつ敵がいるときだけ判定するよ。両方チェックすることで、無駄な計算をしなくて済むんだ。</div>
+  </div>
+
+  <div id="step4" class="step">
+    <div class="step-header"><span class="step-number">4</span> <h2>スコアをつけよう</h2></div>
+    <p>敵を倒したら、スコアを増やそう！まず変数を追加：</p>
+    <div class="code-block">
+      <button class="copy-btn" aria-label="コードをコピー">コピー</button>
+<pre><code><span class="keyword">let</span> score = <span class="number">0</span>;</code></pre>
+    </div>
+    <p>そして、ステップ3の当たり判定の中に <code>score = score + 1;</code> を追加するよ。</p>
+
+    <p>スコアを画面に表示するには <code>text()</code> を使おう。描画処理の<strong>一番最後</strong>に書いてね：</p>
+    <div class="code-block">
+      <button class="copy-btn" aria-label="コードをコピー">コピー</button>
+<pre><code><span class="func">fill</span>(<span class="number">255</span>);
+<span class="func">textSize</span>(<span class="number">18</span>);
+<span class="func">text</span>(<span class="string">"SCORE: "</span> + score, <span class="number">10</span>, <span class="number">30</span>);</code></pre>
+    </div>
+    <div class="info-card">
+      <h3>text() の使い方</h3>
+      <p><code>text("表示したいもの", X, Y)</code> で画面に文字を出すよ。</p>
+      <p><code>"SCORE: " + score</code> で、文字と変数の値をつなげて表示できる。スコアが 5 なら <strong>SCORE: 5</strong> と出るよ。</p>
+    </div>
+  </div>
+
+  <div id="step5" class="step">
+    <div class="step-header"><span class="step-number">5</span> <h2>やってみよう</h2></div>
+    <p>ここまで書けたら実行してみよう！弾が敵に当たったらスコアが増えるはず。</p>
+
+    <div class="try-box"><code>d < 20</code> の <code>20</code> を変えてみよう！<code>50</code> にしたら当てやすくなるかな？<code>10</code> にしたら？</div>
+
+    <div class="try-box">スコアの色を変えてみよう！<code>fill(255, 255, 100)</code> にしたら黄色になるよ。位置も変えてみて。</div>
+
+    <div class="try-box"><code>textSize()</code> の数字を大きくしてみよう。<code>32</code> にしたらどうなる？</div>
+  </div>
+
+  <div id="challenge" class="step">
+    <div class="step-header"><span class="step-number">★</span> <h2>発展チャレンジ：敵にぶつかったら？</h2></div>
+    <p><code>dist()</code> は弾と敵の距離だけじゃなく、<strong>プレイヤーと敵の距離</strong>もはかれるよ。</p>
+    <p>もしプレイヤーが敵にぶつかったら、何か起きるようにしてみよう！</p>
+
+    <div class="challenge-box">
+      <code>dist(x, y, enemyX, enemyY)</code> でプレイヤーと敵の距離を調べて、近すぎたら何かしてみよう！
+    </div>
+
+    <div class="hint-box">💡 ヒント：ぶつかったら <code>score = 0;</code> でスコアリセット、とか <code>background(255, 0, 0);</code> で画面を赤くフラッシュ、とか。いろいろ実験してみて！</div>
+  </div>
+
+  <div id="demo" class="demo-section">
+    <button class="demo-btn" onclick="openDemo()">🎮 デモを見る</button>
+  </div>
+
+  <nav class="lesson-nav" aria-label="レッスンナビゲーション">
+    <a href="lesson07.html">&larr; Lesson 07</a>
+    <a href="index.html" class="lesson-nav__home">もくじに戻る</a>
+    <span></span>
+  </nav>
+
+  </main>
+</div>
+
+<div class="modal-overlay" id="demo-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="デモプレビュー">
+  <div class="modal-content">
+    <button class="modal-close" aria-label="閉じる" onclick="closeDemo()">&times;</button>
+    <p class="demo-note">矢印キーで移動、スペースで弾を撃って敵を倒そう！スコアが増えるよ。</p>
+    <div id="demo-container"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js"></script>
+<script>
+window.demoSketch = function(p) {
+  let x = 240, y = 580;
+  let bulletX = 0, bulletY = 0, bulletSpeed = 6, bulletActive = false;
+  let enemyX, enemyY, enemySpeed;
+  let score = 0;
+
+  p.setup = function() {
+    p.createCanvas(480, 640);
+    enemyX = p.random(20, 460);
+    enemyY = -20;
+    enemySpeed = p.random(1, 4);
+  };
+
+  p.draw = function() {
+    p.background(10, 10, 30);
+
+    // 星
+    p.push();
+    p.randomSeed(42);
+    p.fill(255, 255, 255, 80);
+    p.noStroke();
+    for (let i = 0; i < 80; i++) {
+      p.ellipse(p.random(480), p.random(640), p.random(1, 3));
+    }
+    p.randomSeed(p.millis());
+    p.pop();
+
+    // プレイヤー操作
+    if (p.keyIsDown(p.LEFT_ARROW) && x > 20) x -= 4;
+    if (p.keyIsDown(p.RIGHT_ARROW) && x < 460) x += 4;
+    if (p.keyIsDown(p.UP_ARROW) && y > 20) y -= 4;
+    if (p.keyIsDown(p.DOWN_ARROW) && y < 620) y += 4;
+
+    // 弾発射
+    if (p.keyIsDown(32) && !bulletActive) {
+      bulletActive = true; bulletX = x; bulletY = y - 20;
+    }
+    if (bulletActive) bulletY -= bulletSpeed;
+    if (bulletY < 0) bulletActive = false;
+
+    // 敵移動
+    enemyY += enemySpeed;
+    if (enemyY > 660) {
+      enemyX = p.random(20, 460);
+      enemyY = -20;
+      enemySpeed = p.random(1, 4);
+    }
+
+    // 当たり判定
+    if (bulletActive) {
+      let d = p.dist(bulletX, bulletY, enemyX, enemyY);
+      if (d < 20) {
+        bulletActive = false;
+        enemyX = p.random(20, 460);
+        enemyY = -20;
+        enemySpeed = p.random(1, 4);
+        score++;
+      }
+    }
+
+    // 描画: プレイヤー
+    p.fill(60, 180, 255);
+    p.noStroke();
+    p.ellipse(x, y, 36, 44);
+    p.fill(100, 200, 255, 150);
+    p.ellipse(x, y + 20, 12, 8);
+
+    // 描画: 弾
+    if (bulletActive) {
+      p.fill(255, 255, 100);
+      p.ellipse(bulletX, bulletY, 6, 12);
+    }
+
+    // 描画: 敵
+    p.fill(255, 80, 80);
+    p.ellipse(enemyX, enemyY, 36, 36);
+
+    // 描画: スコア
+    p.fill(255);
+    p.textSize(18);
+    p.text("SCORE: " + score, 10, 30);
+  };
+};
+</script>
+<script src="js/common.js"></script>
+
+</body>
+</html>

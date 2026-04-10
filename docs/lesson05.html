@@ -136,6 +136,7 @@ window.demoSketch = function(p) {
   p.draw = function() {
     p.background(10, 10, 30);
 
+    p.push();
     p.randomSeed(42);
     p.fill(255, 255, 255, 80);
     p.noStroke();
@@ -145,6 +146,8 @@ window.demoSketch = function(p) {
       let ss = p.random(1, 3);
       p.ellipse(sx, sy, ss, ss);
     }
+    p.randomSeed(p.millis());
+    p.pop();
 
     if (p.keyIsDown(p.LEFT_ARROW) && x > 20) x -= 4;
     if (p.keyIsDown(p.RIGHT_ARROW) && x < 460) x += 4;
