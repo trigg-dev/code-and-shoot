@@ -127,7 +127,7 @@
   <div class="step-header"><span class="step-number">5</span> <h2>完成コードを確認しよう</h2></div>
   <p>上下左右すべて書けたら、こんなコードになるはず：</p>
 
-  <div class="code-block">
+  <div class="code-block spoiler">
     <button class="copy-btn" aria-label="コードをコピー">コピー</button>
     <pre><code><span class="keyword">let</span> x = <span class="number">240</span>;
 <span class="keyword">let</span> y = <span class="number">580</span>;
@@ -139,10 +139,18 @@
 <span class="keyword">function</span> <span class="func">draw</span>() {
   <span class="func">background</span>(<span class="number">10</span>, <span class="number">10</span>, <span class="number">30</span>);
 
-  <span class="keyword">if</span> (<span class="func">keyIsDown</span>(LEFT_ARROW))  { x = x - <span class="number">4</span>; }
-  <span class="keyword">if</span> (<span class="func">keyIsDown</span>(RIGHT_ARROW)) { x = x + <span class="number">4</span>; }
-  <span class="keyword">if</span> (<span class="func">keyIsDown</span>(UP_ARROW))    { y = y - <span class="number">4</span>; }
-  <span class="keyword">if</span> (<span class="func">keyIsDown</span>(DOWN_ARROW))  { y = y + <span class="number">4</span>; }
+  <span class="keyword">if</span> (<span class="func">keyIsDown</span>(LEFT_ARROW)) {
+    x = x - <span class="number">4</span>;
+  }
+  <span class="keyword">if</span> (<span class="func">keyIsDown</span>(RIGHT_ARROW)) {
+    x = x + <span class="number">4</span>;
+  }
+  <span class="keyword">if</span> (<span class="func">keyIsDown</span>(UP_ARROW)) {
+    y = y - <span class="number">4</span>;
+  }
+  <span class="keyword">if</span> (<span class="func">keyIsDown</span>(DOWN_ARROW)) {
+    y = y + <span class="number">4</span>;
+  }
 
   <span class="func">fill</span>(<span class="number">60</span>, <span class="number">180</span>, <span class="number">255</span>);
   <span class="func">noStroke</span>();

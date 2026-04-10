@@ -396,6 +396,32 @@ main {
   border: 1px solid var(--card-border);
 }
 
+/* --- ぼかし（ネタバレ防止） --- */
+.spoiler {
+  position: relative;
+  cursor: pointer;
+}
+.spoiler::after {
+  content: 'クリックで表示';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(11, 14, 26, 0.5);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-radius: 8px;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.95em;
+  transition: opacity 0.3s;
+}
+.spoiler.revealed::after {
+  opacity: 0;
+  pointer-events: none;
+}
+
 /* --- 補足テキスト --- */
 .hint-text {
   margin-top: 8px;

@@ -8,9 +8,14 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', () => {
       const code = btn.closest('.code-block').querySelector('code').textContent;
       navigator.clipboard.writeText(code);
-      btn.textContent = 'コピーした！';
+      btn.textContent = 'コピー！';
       setTimeout(() => { btn.textContent = 'コピー'; }, 1500);
     });
+  });
+
+  /* --- ぼかし解除 --- */
+  document.querySelectorAll('.spoiler').forEach(el => {
+    el.addEventListener('click', () => { el.classList.add('revealed'); });
   });
 
   /* --- サイドバー スクロール追従 --- */
