@@ -57,6 +57,7 @@ window.openDemo = function() {
   const modal = document.getElementById('demo-modal');
   if (!modal) return;
   modal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
 
   if (!demoInstance && typeof window.demoSketch === 'function') {
     demoInstance = new p5(window.demoSketch, 'demo-container');
@@ -67,6 +68,7 @@ window.closeDemo = function() {
   const modal = document.getElementById('demo-modal');
   if (!modal) return;
   modal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
 
   if (demoInstance) {
     demoInstance.remove();

@@ -25,6 +25,7 @@
       <a href="#step2">2. ifの中にif</a>
       <a href="#step3">3. 端の値を考えよう</a>
       <a href="#step4">4. 残りも書いてみよう</a>
+      <a href="#challenge">発展チャレンジ</a>
       <a href="#demo">デモ</a>
     </nav>
   </aside>
@@ -89,6 +90,21 @@
     <div class="hint-box">💡 パターンは全部同じ！外側の <code>if</code> でキーを調べて、内側の <code>if</code> で端チェック。方向と比べる数字が違うだけだよ。</div>
 
     <div class="try-box">スピードの <code>4</code> を <code>8</code> にして、端ギリギリの動きを確認してみよう！</div>
+  </div>
+
+  <div id="challenge" class="step">
+    <div class="step-header"><span class="step-number">★</span> <h2>発展チャレンジ：スピードを上げると…？</h2></div>
+    <p>ステップ4の「やってみよう」でスピードを <code>8</code> にしてみたかな？端で止まるはずなのに、よく見ると<strong>キャラがちょっとだけ端からはみ出す</strong>ことがあるよ。</p>
+    <p>たとえば左端のチェックを考えてみよう。<code>x</code> が <code>24</code> のときに左キーを押すと…</p>
+    <div class="info-card">
+      <p><code>x</code> は <code>24</code> → 20 より大きいから、if の中に入る<br>
+      <code>x = x - 8</code> で <code>x</code> が <code>16</code> になる → <strong>端の 20 を飛び越えちゃった！</strong></p>
+    </div>
+    <p>スピードが大きいほど、1フレームで動く距離が大きくなるから、チェックをすり抜けやすいんだ。</p>
+
+    <div class="challenge-box">これを直すには、動いた<strong>あと</strong>に「行きすぎてたら端の位置に戻す」処理を足せばいいよ。どう書けばいいか考えてみよう！</div>
+
+    <div class="hint-box">💡 ヒント：<code>if</code> を使って「もし <code>x</code> が 20 より小さくなっていたら、<code>x</code> を 20 にする」と書けばOK。移動のifとは<strong>別の</strong>ifだよ。</div>
   </div>
 
   <div id="demo" class="demo-section">
