@@ -5,421 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lesson 01: エディタに慣れよう｜スペース★サバイバー</title>
 <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;900&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #0b0e1a;
-    --card: #141828;
-    --card-border: #1e2744;
-    --accent: #3db8ff;
-    --accent-dim: #1a5a8a;
-    --yellow: #ffe066;
-    --green: #6cdb8a;
-    --pink: #ff6b9d;
-    --orange: #ffa44f;
-    --text: #c8d6e5;
-    --text-bright: #eef2f7;
-    --code-bg: #0d1120;
-    --tag-bg: #1a2340;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: 'M PLUS Rounded 1c', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.8;
-    padding: 0 0 80px 0;
-  }
-
-  /* --- ヘッダー --- */
-  .header {
-    text-align: center;
-    padding: 60px 20px 40px;
-    position: relative;
-    overflow: hidden;
-  }
-  .header::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: radial-gradient(ellipse at 50% 0%, rgba(61,184,255,0.12) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .header .lesson-number {
-    display: inline-block;
-    background: var(--accent-dim);
-    color: var(--accent);
-    font-size: 0.9em;
-    font-weight: 700;
-    padding: 4px 18px;
-    border-radius: 20px;
-    margin-bottom: 12px;
-    letter-spacing: 0.05em;
-  }
-  .header h1 {
-    font-size: 2.2em;
-    font-weight: 900;
-    color: var(--text-bright);
-    letter-spacing: 0.02em;
-  }
-  .header h1 span { color: var(--accent); }
-  .header p {
-    margin-top: 8px;
-    font-size: 1.05em;
-    color: var(--text);
-    opacity: 0.7;
-  }
-
-  /* --- レイアウト --- */
-  .page-layout {
-    display: flex;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 20px;
-  }
-  .sidebar {
-    position: sticky;
-    top: 20px;
-    align-self: flex-start;
-    width: 180px;
-    flex-shrink: 0;
-    padding-right: 24px;
-    display: none; /* hidden on mobile */
-  }
-  .sidebar nav {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-  .sidebar a {
-    display: block;
-    padding: 6px 12px;
-    color: var(--text);
-    text-decoration: none;
-    font-size: 0.82em;
-    font-weight: 700;
-    border-left: 2px solid transparent;
-    border-radius: 0 6px 6px 0;
-    transition: all 0.2s;
-    opacity: 0.6;
-  }
-  .sidebar a:hover {
-    opacity: 1;
-    color: var(--accent);
-  }
-  .sidebar a.active {
-    border-left-color: var(--accent);
-    color: var(--accent);
-    opacity: 1;
-    background: rgba(61,184,255,0.05);
-  }
-  .main-content {
-    flex: 1;
-    min-width: 0;
-    max-width: 800px;
-  }
-  @media (min-width: 900px) {
-    .sidebar { display: block; }
-  }
-
-  /* --- ゴールセクション --- */
-  .goal-section {
-    background: linear-gradient(135deg, rgba(61,184,255,0.08), rgba(108,219,138,0.06));
-    border: 1px solid var(--accent-dim);
-    border-radius: 12px;
-    padding: 24px 28px;
-    margin-bottom: 40px;
-  }
-  .goal-section h2 {
-    font-size: 1.3em;
-    font-weight: 900;
-    color: var(--accent);
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .goal-section ul {
-    list-style: none;
-    padding: 0;
-  }
-  .goal-section li {
-    padding: 4px 0;
-    padding-left: 20px;
-    position: relative;
-    color: var(--text-bright);
-  }
-  .goal-section li::before {
-    content: '✦';
-    position: absolute;
-    left: 0;
-    color: var(--yellow);
-  }
-
-  /* --- ステップセクション --- */
-  .step {
-    margin-bottom: 40px;
-  }
-  .step-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
-  }
-  .step-number {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    background: var(--accent);
-    color: var(--bg);
-    font-weight: 900;
-    font-size: 1.1em;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-  .step-header h2 {
-    font-size: 1.35em;
-    font-weight: 900;
-    color: var(--text-bright);
-  }
-  .step p {
-    margin-bottom: 14px;
-    font-size: 1.02em;
-  }
-  .step p strong {
-    color: var(--text-bright);
-  }
-
-  /* --- コードブロック --- */
-  .code-block {
-    position: relative;
-    margin: 16px 0 20px;
-  }
-  .code-block pre {
-    background: var(--code-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 8px;
-    padding: 18px 20px;
-    padding-right: 80px;
-    overflow-x: auto;
-    font-family: 'Source Code Pro', monospace;
-    font-size: 0.92em;
-    line-height: 1.7;
-    color: var(--text);
-  }
-  .copy-btn {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    background: var(--tag-bg);
-    color: var(--accent);
-    border: 1px solid var(--card-border);
-    border-radius: 6px;
-    padding: 4px 12px;
-    font-family: 'M PLUS Rounded 1c', sans-serif;
-    font-size: 0.78em;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background 0.2s, color 0.2s;
-  }
-  .copy-btn:hover {
-    background: var(--accent-dim);
-    color: #fff;
-  }
-
-  code {
-    font-family: 'Source Code Pro', monospace;
-    background: var(--code-bg);
-    padding: 2px 7px;
-    border-radius: 4px;
-    font-size: 0.92em;
-    color: var(--yellow);
-  }
-
-  /* --- やってみようボックス --- */
-  .try-box {
-    background: var(--card);
-    border: 1px solid var(--card-border);
-    border-left: 4px solid var(--yellow);
-    border-radius: 8px;
-    padding: 16px 20px;
-    margin: 16px 0 20px;
-  }
-  .try-box .try-label {
-    font-weight: 900;
-    color: var(--yellow);
-    font-size: 0.95em;
-    margin-bottom: 6px;
-  }
-  .try-box p {
-    margin-bottom: 6px;
-    font-size: 0.95em;
-  }
-
-  /* --- クイズボックス --- */
-  .quiz-box {
-    background: var(--card);
-    border: 1px solid var(--card-border);
-    border-left: 4px solid var(--pink);
-    border-radius: 8px;
-    padding: 16px 20px;
-    margin: 16px 0 20px;
-  }
-  .quiz-box .quiz-label {
-    font-weight: 900;
-    color: var(--pink);
-    font-size: 0.95em;
-    margin-bottom: 6px;
-  }
-
-  /* --- 解説カード --- */
-  .info-card {
-    background: var(--card);
-    border: 1px solid var(--card-border);
-    border-radius: 12px;
-    padding: 20px 24px;
-    margin: 16px 0 20px;
-  }
-  .info-card h3 {
-    color: var(--accent);
-    font-size: 1.05em;
-    margin-bottom: 8px;
-  }
-  .info-card p {
-    font-size: 0.95em;
-  }
-
-  /* --- 座標図 --- */
-  .coord-diagram {
-    background: var(--code-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 8px;
-    padding: 20px;
-    margin: 16px 0;
-    text-align: center;
-    font-family: 'Source Code Pro', monospace;
-    font-size: 0.9em;
-    color: var(--text);
-    line-height: 1.6;
-  }
-  .coord-diagram .highlight {
-    color: var(--accent);
-    font-weight: 700;
-  }
-
-  /* --- デモボタン --- */
-  .demo-btn {
-    background: linear-gradient(135deg, var(--accent-dim), var(--accent));
-    color: #fff;
-    border: none;
-    border-radius: 12px;
-    padding: 14px 36px;
-    font-family: 'M PLUS Rounded 1c', sans-serif;
-    font-size: 1.1em;
-    font-weight: 700;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .demo-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 20px rgba(61,184,255,0.3);
-  }
-
-  /* --- モーダル --- */
-  .modal-overlay {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.85);
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .modal-content {
-    position: relative;
-    background: var(--card);
-    border: 1px solid var(--card-border);
-    border-radius: 16px;
-    padding: 24px;
-  }
-  .modal-close {
-    position: absolute;
-    top: -12px;
-    right: -12px;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: var(--card);
-    border: 1px solid var(--card-border);
-    color: var(--text);
-    font-size: 1.2em;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s;
-  }
-  .modal-close:hover {
-    background: var(--pink);
-    color: #fff;
-  }
-  #demo-container canvas {
-    border-radius: 8px;
-    border: 1px solid var(--card-border);
-  }
-
-  /* --- ナビゲーション --- */
-  .lesson-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 48px;
-    padding-top: 24px;
-    border-top: 1px solid var(--card-border);
-  }
-  .lesson-nav a {
-    display: inline-block;
-    padding: 10px 24px;
-    background: var(--tag-bg);
-    color: var(--accent);
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 0.95em;
-    transition: background 0.2s, color 0.2s;
-  }
-  .lesson-nav a:hover {
-    background: var(--accent-dim);
-    color: #fff;
-  }
-  .lesson-nav .spacer {
-    flex: 1;
-  }
-
-  /* --- レスポンシブ --- */
-  @media (max-width: 600px) {
-    .header h1 { font-size: 1.6em; }
-    .step-header h2 { font-size: 1.1em; }
-    .code-block pre { font-size: 0.82em; padding: 14px 14px; padding-right: 70px; }
-  }
-</style>
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/lesson.css">
 </head>
 <body>
 
 <!-- ===== ヘッダー ===== -->
-<div class="header">
-  <div class="lesson-number">LESSON 01</div>
+<header>
+  <span class="lesson-badge">LESSON 01</span>
   <h1>エディタに<span>慣れよう</span></h1>
   <p>はじめてのプログラミング！画面に図形を描いてみよう</p>
-</div>
+</header>
 
 <div class="page-layout">
 
   <!-- ===== サイドバー ===== -->
-  <aside class="sidebar">
+  <aside class="sidebar" aria-label="ページ内ナビ">
     <nav>
       <a href="#goal">ゴール</a>
       <a href="#step1">setup と draw</a>
@@ -431,10 +32,10 @@
   </aside>
 
   <!-- ===== メインコンテンツ ===== -->
-  <div class="main-content">
+  <main id="main-content">
 
     <!-- ===== ゴール ===== -->
-    <div class="goal-section" id="goal">
+    <section id="goal" class="goal-section">
       <h2>🎯 今回のゴール</h2>
       <ul>
         <li><code>setup()</code> と <code>draw()</code> のちがいをわかる</li>
@@ -442,14 +43,11 @@
         <li>背景の色をRGBで変えられる</li>
         <li>四角形と丸を描ける</li>
       </ul>
-    </div>
+    </section>
 
     <!-- ===== STEP 1 ===== -->
     <div class="step" id="step1">
-      <div class="step-header">
-        <div class="step-number">1</div>
-        <h2>setup() と draw() ― プログラムの2本柱</h2>
-      </div>
+      <div class="step-header"><span class="step-number">1</span> <h2>setup() と draw() ― プログラムの2本柱</h2></div>
       <p>
         p5.js のプログラムには、大事な関数（きのう）が<strong>2つ</strong>あるよ。
       </p>
@@ -462,7 +60,7 @@
         <p>setup() が終わったら、<strong>ずーっと何回もくりかえし</strong>動く。ここに「描きたいもの」を書くよ。1秒間に約60回も動いてるんだ！</p>
       </div>
       <div class="code-block">
-        <button class="copy-btn">コピー</button>
+        <button class="copy-btn" aria-label="コードをコピー">コピー</button>
         <pre><code>function setup() {
   // ここは最初に1回だけ動く
 }
@@ -475,15 +73,12 @@ function draw() {
 
     <!-- ===== STEP 2 ===== -->
     <div class="step" id="step2">
-      <div class="step-header">
-        <div class="step-number">2</div>
-        <h2>キャンバスを作ろう ― createCanvas()</h2>
-      </div>
+      <div class="step-header"><span class="step-number">2</span> <h2>キャンバスを作ろう ― createCanvas()</h2></div>
       <p>
         まずは「おえかきするスペース」を用意しよう。<code>createCanvas(横, 縦)</code> で大きさを決めるよ。
       </p>
       <div class="code-block">
-        <button class="copy-btn">コピー</button>
+        <button class="copy-btn" aria-label="コードをコピー">コピー</button>
         <pre><code>function setup() {
   createCanvas(480, 640);
 }</code></pre>
@@ -505,19 +100,16 @@ function draw() {
 
     <!-- ===== STEP 3 ===== -->
     <div class="step" id="step3">
-      <div class="step-header">
-        <div class="step-number">3</div>
-        <h2>背景を塗ろう ― background()</h2>
-      </div>
+      <div class="step-header"><span class="step-number">3</span> <h2>背景を塗ろう ― background()</h2></div>
       <p>
         <code>background(R, G, B)</code> で背景を塗れるよ。R（赤）、G（緑）、B（青）の3つの数字（0〜255）で色を作るんだ。
       </p>
       <div class="info-card">
         <h3>RGBってなに？</h3>
-        <p>光の三原色 <strong style="color:var(--pink)">赤(R)</strong> <strong style="color:var(--green)">緑(G)</strong> <strong style="color:var(--accent)">青(B)</strong> をまぜて色を作るしくみ。それぞれ 0（なし）〜 255（最大）の数字で決めるよ。</p>
+        <p>光の三原色 <strong class="text-pink">赤(R)</strong> <strong class="text-green">緑(G)</strong> <strong class="text-accent">青(B)</strong> をまぜて色を作るしくみ。それぞれ 0（なし）〜 255（最大）の数字で決めるよ。</p>
       </div>
       <div class="code-block">
-        <button class="copy-btn">コピー</button>
+        <button class="copy-btn" aria-label="コードをコピー">コピー</button>
         <pre><code>function setup() {
   createCanvas(480, 640);
 }
@@ -528,38 +120,31 @@ function draw() {
       </div>
       <p><code>background(10, 10, 30)</code> は暗い青っぽい色。宇宙みたいでカッコいいでしょ？</p>
       <div class="try-box">
-        <div class="try-label">🚀 やってみよう</div>
-        <p>数字を変えてみよう！ <code>background(255, 0, 0)</code> にしたら何色になるかな？</p>
+        数字を変えてみよう！ <code>background(255, 0, 0)</code> にしたら何色になるかな？
       </div>
     </div>
 
     <!-- ===== STEP 4 ===== -->
     <div class="step" id="step4">
-      <div class="step-header">
-        <div class="step-number">4</div>
-        <h2>色をぬろう ― fill()</h2>
-      </div>
+      <div class="step-header"><span class="step-number">4</span> <h2>色をぬろう ― fill()</h2></div>
       <p>
         <code>fill(R, G, B)</code> は、これから描く図形の色を決めるよ。background と同じで RGB で指定するんだ。
       </p>
       <div class="code-block">
-        <button class="copy-btn">コピー</button>
+        <button class="copy-btn" aria-label="コードをコピー">コピー</button>
         <pre><code>fill(255, 0, 0);  // 赤！</code></pre>
       </div>
       <div class="quiz-box">
-        <div class="quiz-label">🤔 クイズ！</div>
+        <div class="quiz-box__label">🤔 クイズ！</div>
         <p><code>fill(255, 255, 255)</code> にしたら何色になる？</p>
         <p><code>fill(0, 0, 0)</code> は？</p>
-        <p style="margin-top:8px; font-size:0.85em; color: var(--accent);">ヒント：全部最大＝光が全部まざる ／ 全部0＝光がない</p>
+        <p class="hint-text">ヒント：全部最大＝光が全部まざる ／ 全部0＝光がない</p>
       </div>
     </div>
 
     <!-- ===== STEP 5 ===== -->
     <div class="step" id="step5">
-      <div class="step-header">
-        <div class="step-number">5</div>
-        <h2>図形を描こう ― rect() と ellipse()</h2>
-      </div>
+      <div class="step-header"><span class="step-number">5</span> <h2>図形を描こう ― rect() と ellipse()</h2></div>
       <p>いよいよ図形を描くよ！</p>
 
       <div class="info-card">
@@ -567,7 +152,7 @@ function draw() {
         <p>四角形を描く。(x, y) が左上のかどの位置だよ。</p>
       </div>
       <div class="code-block">
-        <button class="copy-btn">コピー</button>
+        <button class="copy-btn" aria-label="コードをコピー">コピー</button>
         <pre><code>fill(255, 0, 0);
 rect(190, 270, 100, 100);</code></pre>
       </div>
@@ -579,31 +164,29 @@ rect(190, 270, 100, 100);</code></pre>
       <p>同じように <code>ellipse(x, y, 横はば, 縦はば)</code> で丸も描いてみよう！</p>
 
       <div class="try-box">
-        <div class="try-label">🚀 やってみよう</div>
-        <p>四角と丸の<strong>位置</strong>を変えてみよう！数字をいろいろいじってみてね。</p>
-        <p>丸の横はばと縦はばを変えたらどうなるかな？</p>
+        四角と丸の<strong>位置</strong>を変えてみよう！数字をいろいろいじってみてね。丸の横はばと縦はばを変えたらどうなるかな？
       </div>
     </div>
 
     <!-- ===== デモボタン ===== -->
-    <div style="text-align: center; margin: 32px 0;">
+    <div class="demo-section">
       <button class="demo-btn" onclick="openDemo()">🎮 デモを見る</button>
     </div>
 
     <!-- ===== ナビゲーション ===== -->
-    <div class="lesson-nav">
-      <a href="index.html">← もくじにもどる</a>
-      <a href="lesson02.html">Lesson 02 へ →</a>
-    </div>
+    <nav class="lesson-nav" aria-label="レッスンナビゲーション">
+      <a href="index.html" class="lesson-nav__home">&larr; もくじにもどる</a>
+      <a href="lesson02.html">Lesson 02 &rarr;</a>
+    </nav>
 
-  </div><!-- /.main-content -->
+  </main>
 
 </div><!-- /.page-layout -->
 
 <!-- ===== モーダル ===== -->
-<div id="demo-modal" class="modal-overlay" style="display:none;">
+<div class="modal-overlay" id="demo-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="デモプレビュー">
   <div class="modal-content">
-    <button class="modal-close" onclick="closeDemo()">×</button>
+    <button class="modal-close" aria-label="閉じる" onclick="closeDemo()">&times;</button>
     <div id="demo-container"></div>
   </div>
 </div>
@@ -611,70 +194,22 @@ rect(190, 270, 100, 100);</code></pre>
 <!-- ===== p5.js ===== -->
 <script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js"></script>
 
-<!-- ===== モーダル制御 ===== -->
+<!-- ===== デモスケッチ ===== -->
 <script>
-let demoInstance = null;
-function openDemo() {
-  document.getElementById('demo-modal').style.display = 'flex';
-  document.body.style.overflow = 'hidden';
-  if (!demoInstance) {
-    demoInstance = new p5(function(p) {
-      p.setup = function() {
-        p.createCanvas(480, 640);
-      };
-      p.draw = function() {
-        p.background(10, 10, 30);
-        p.fill(255, 0, 0);
-        p.rect(190, 270, 100, 100);
-        p.fill(0, 255, 0);
-        p.ellipse(240, 450, 80, 80);
-      };
-    }, 'demo-container');
-  }
-}
-function closeDemo() {
-  document.getElementById('demo-modal').style.display = 'none';
-  document.body.style.overflow = '';
-  if (demoInstance) {
-    demoInstance.remove();
-    demoInstance = null;
-  }
-}
-document.getElementById('demo-modal').addEventListener('click', function(e) {
-  if (e.target === this) closeDemo();
-});
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') closeDemo();
-});
+window.demoSketch = function(p) {
+  p.setup = function() {
+    p.createCanvas(480, 640);
+  };
+  p.draw = function() {
+    p.background(10, 10, 30);
+    p.fill(255, 0, 0);
+    p.rect(190, 270, 100, 100);
+    p.fill(0, 255, 0);
+    p.ellipse(240, 450, 80, 80);
+  };
+};
 </script>
-
-<!-- ===== コピーボタン ===== -->
-<script>
-document.querySelectorAll('.copy-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const code = btn.closest('.code-block').querySelector('code').textContent;
-    navigator.clipboard.writeText(code);
-    btn.textContent = 'コピーした！';
-    setTimeout(() => btn.textContent = 'コピー', 1500);
-  });
-});
-</script>
-
-<!-- ===== サイドバー スクロール追従 ===== -->
-<script>
-const sections = document.querySelectorAll('.step, .goal-section');
-const sidebarLinks = document.querySelectorAll('.sidebar a');
-window.addEventListener('scroll', () => {
-  let current = '';
-  sections.forEach(section => {
-    const top = section.getBoundingClientRect().top;
-    if (top < 200) current = section.id;
-  });
-  sidebarLinks.forEach(link => {
-    link.classList.toggle('active', link.getAttribute('href') === '#' + current);
-  });
-});
-</script>
+<script src="js/common.js"></script>
 
 </body>
 </html>

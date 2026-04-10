@@ -1,0 +1,104 @@
+/* ========================================
+   common.css — 全ページ共通スタイル
+   ======================================== */
+
+:root {
+  --bg: #0b0e1a;
+  --card: #141828;
+  --card-border: #1e2744;
+  --accent: #3db8ff;
+  --accent-dim: #1a5a8a;
+  --yellow: #ffe066;
+  --green: #6cdb8a;
+  --pink: #ff6b9d;
+  --orange: #ffa44f;
+  --text: #c8d6e5;
+  --text-bright: #eef2f7;
+  --code-bg: #0d1120;
+  --tag-bg: #1a2340;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.8;
+  padding: 0 0 80px 0;
+}
+
+/* --- ヘッダー --- */
+header {
+  text-align: center;
+  padding: 60px 20px 40px;
+  position: relative;
+  overflow: hidden;
+}
+header::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(61,184,255,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+header h1 {
+  font-size: 2.4em;
+  font-weight: 900;
+  color: var(--text-bright);
+  letter-spacing: 0.02em;
+}
+header h1 span { color: var(--accent); }
+header p {
+  margin-top: 8px;
+  font-size: 1.05em;
+  color: var(--text);
+  opacity: 0.7;
+}
+.lesson-badge {
+  display: inline-block;
+  background: var(--accent-dim);
+  color: var(--accent);
+  font-size: 0.9em;
+  font-weight: 700;
+  padding: 4px 18px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+  letter-spacing: 0.05em;
+}
+
+/* --- インラインコード --- */
+code {
+  font-family: 'Source Code Pro', monospace;
+  background: var(--code-bg);
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 0.92em;
+  color: var(--yellow);
+}
+
+/* --- シンタックスハイライト --- */
+pre .comment { color: #5a6a8a; }
+pre .keyword { color: var(--pink); }
+pre .func    { color: var(--yellow); }
+pre .number  { color: var(--green); }
+pre .string  { color: var(--orange); }
+
+/* --- コンテナ --- */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* --- ユーティリティ --- */
+.text-pink   { color: var(--pink); }
+.text-green  { color: var(--green); }
+.text-accent { color: var(--accent); }
+.text-yellow { color: var(--yellow); }
+.text-orange { color: var(--orange); }
+
+/* --- レスポンシブ --- */
+@media (max-width: 600px) {
+  header h1 { font-size: 1.6em; }
+}

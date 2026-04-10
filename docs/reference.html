@@ -5,235 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>p5.js リファレンス｜Code & Shoot</title>
 <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;900&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #0b0e1a;
-    --card: #141828;
-    --card-border: #1e2744;
-    --accent: #3db8ff;
-    --accent-dim: #1a5a8a;
-    --yellow: #ffe066;
-    --green: #6cdb8a;
-    --pink: #ff6b9d;
-    --orange: #ffa44f;
-    --text: #c8d6e5;
-    --text-bright: #eef2f7;
-    --code-bg: #0d1120;
-    --tag-bg: #1a2340;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: 'M PLUS Rounded 1c', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.8;
-    padding: 0 0 80px 0;
-  }
-
-  /* --- ヘッダー --- */
-  .header {
-    text-align: center;
-    padding: 60px 20px 40px;
-    position: relative;
-    overflow: hidden;
-  }
-  .header::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: radial-gradient(ellipse at 50% 0%, rgba(61,184,255,0.12) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .header h1 {
-    font-size: 2.4em;
-    font-weight: 900;
-    color: var(--text-bright);
-    letter-spacing: 0.02em;
-  }
-  .header h1 span { color: var(--accent); }
-  .header p {
-    margin-top: 8px;
-    font-size: 1.05em;
-    color: var(--text);
-    opacity: 0.7;
-  }
-
-  /* --- ナビ --- */
-  .nav {
-    max-width: 900px;
-    margin: 0 auto 40px;
-    padding: 0 20px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    justify-content: center;
-  }
-  .nav a {
-    display: inline-block;
-    padding: 6px 16px;
-    background: var(--tag-bg);
-    color: var(--accent);
-    border-radius: 20px;
-    text-decoration: none;
-    font-size: 0.9em;
-    font-weight: 700;
-    transition: background 0.2s;
-  }
-  .nav a:hover {
-    background: var(--accent-dim);
-    color: #fff;
-  }
-
-  /* --- メインコンテンツ --- */
-  .container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 20px;
-  }
-
-  /* --- セクション --- */
-  .section {
-    margin-bottom: 48px;
-  }
-  .section-title {
-    font-size: 1.5em;
-    font-weight: 900;
-    color: var(--text-bright);
-    padding-bottom: 12px;
-    margin-bottom: 24px;
-    border-bottom: 2px solid var(--card-border);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .section-title .icon {
-    font-size: 1.2em;
-  }
-
-  /* --- カード --- */
-  .card {
-    background: var(--card);
-    border: 1px solid var(--card-border);
-    border-radius: 12px;
-    padding: 24px;
-    margin-bottom: 16px;
-  }
-  .card-name {
-    font-family: 'Source Code Pro', monospace;
-    font-size: 1.2em;
-    font-weight: 600;
-    color: var(--yellow);
-    margin-bottom: 4px;
-  }
-  .card-desc {
-    font-size: 1em;
-    margin-bottom: 14px;
-    color: var(--text);
-  }
-  .card-desc strong {
-    color: var(--text-bright);
-  }
-
-  /* --- 引数テーブル --- */
-  .args {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 14px;
-    font-size: 0.92em;
-  }
-  .args th {
-    text-align: left;
-    padding: 6px 12px;
-    background: var(--code-bg);
-    color: var(--accent);
-    font-weight: 700;
-    font-size: 0.85em;
-    letter-spacing: 0.04em;
-  }
-  .args td {
-    padding: 6px 12px;
-    border-bottom: 1px solid var(--card-border);
-  }
-  .args td:first-child {
-    font-family: 'Source Code Pro', monospace;
-    color: var(--orange);
-    white-space: nowrap;
-  }
-
-  /* --- コード --- */
-  pre {
-    background: var(--code-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 8px;
-    padding: 16px 20px;
-    overflow-x: auto;
-    font-family: 'Source Code Pro', monospace;
-    font-size: 0.92em;
-    line-height: 1.7;
-    color: var(--text);
-  }
-  pre .comment { color: #5a6a8a; }
-  pre .keyword { color: var(--pink); }
-  pre .func { color: var(--yellow); }
-  pre .number { color: var(--green); }
-  pre .string { color: var(--orange); }
-
-  code {
-    font-family: 'Source Code Pro', monospace;
-    background: var(--code-bg);
-    padding: 2px 7px;
-    border-radius: 4px;
-    font-size: 0.92em;
-    color: var(--yellow);
-  }
-
-  /* --- タグ --- */
-  .tag {
-    display: inline-block;
-    padding: 2px 10px;
-    border-radius: 10px;
-    font-size: 0.78em;
-    font-weight: 700;
-    margin-left: 8px;
-    vertical-align: middle;
-  }
-  .tag-basic { background: #1a3a2a; color: var(--green); }
-  .tag-mid   { background: #2a2a1a; color: var(--yellow); }
-  .tag-adv   { background: #2a1a2a; color: var(--pink); }
-
-  /* --- ヒント --- */
-  .hint {
-    background: #1a1e30;
-    border-left: 3px solid var(--accent);
-    border-radius: 0 8px 8px 0;
-    padding: 14px 18px;
-    margin-top: 14px;
-    font-size: 0.92em;
-  }
-  .hint::before {
-    content: '💡 ';
-  }
-
-  /* --- レスポンシブ --- */
-  @media (max-width: 600px) {
-    .header h1 { font-size: 1.6em; }
-    .card { padding: 16px; }
-    pre { font-size: 0.82em; padding: 12px; }
-  }
-</style>
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/reference.css">
 </head>
 <body>
 
-<!-- ========== ヘッダー ========== -->
-<div class="header">
+<header>
   <h1><span>p5.js</span> リファレンス</h1>
   <p>スペース★サバイバーで使う命令まとめ</p>
-</div>
+</header>
 
-<!-- ========== ナビ ========== -->
-<div class="nav">
+<nav class="ref-nav" aria-label="セクションナビ">
   <a href="#kihon">きほん</a>
   <a href="#drawing">図形をかく</a>
   <a href="#color">色をぬる</a>
@@ -245,14 +27,11 @@
   <a href="#array">配列</a>
   <a href="#loop">くりかえし</a>
   <a href="#function">関数をつくる</a>
-</div>
+</nav>
 
-<div class="container">
+<main class="container">
 
-<!-- ========================================= -->
-<!-- きほん -->
-<!-- ========================================= -->
-<div class="section" id="kihon">
+<section class="section" id="kihon">
   <h2 class="section-title"><span class="icon">🚀</span> きほん</h2>
 
   <div class="card">
@@ -300,12 +79,9 @@
 <span class="func">background</span>(<span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>);    <span class="comment">// 真っ赤</span>
 <span class="func">background</span>(<span class="number">0</span>);             <span class="comment">// 真っ黒（1つだけでもOK）</span></pre>
   </div>
-</div>
+</section>
 
-<!-- ========================================= -->
-<!-- 図形をかく -->
-<!-- ========================================= -->
-<div class="section" id="drawing">
+<section class="section" id="drawing">
   <h2 class="section-title"><span class="icon">⭕</span> 図形をかく</h2>
 
   <div class="card">
@@ -352,12 +128,9 @@
     <div class="card-desc">2つの点をつなぐ直線をひく。</div>
     <pre><span class="func">line</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">480</span>, <span class="number">640</span>);   <span class="comment">// 左上から右下へ線をひく</span></pre>
   </div>
-</div>
+</section>
 
-<!-- ========================================= -->
-<!-- 色をぬる -->
-<!-- ========================================= -->
-<div class="section" id="color">
+<section class="section" id="color">
   <h2 class="section-title"><span class="icon">🎨</span> 色をぬる</h2>
 
   <div class="card">
@@ -383,12 +156,9 @@
     <div class="card-desc">図形のフチの色を決める。</div>
     <pre><span class="func">stroke</span>(<span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>);     <span class="comment">// フチを赤に</span></pre>
   </div>
-</div>
+</section>
 
-<!-- ========================================= -->
-<!-- 座標のしくみ -->
-<!-- ========================================= -->
-<div class="section">
+<section class="section">
   <h2 class="section-title"><span class="icon">📍</span> 座標のしくみ</h2>
 
   <div class="card">
@@ -409,12 +179,9 @@
 </pre>
     <div class="hint">Scratchでは上にいくとyが増えるけど、p5.jsは逆！ 下にいくとyが増えるよ。</div>
   </div>
-</div>
+</section>
 
-<!-- ========================================= -->
-<!-- 変数 -->
-<!-- ========================================= -->
-<div class="section" id="variables">
+<section class="section" id="variables">
   <h2 class="section-title"><span class="icon">📦</span> 変数（へんすう）</h2>
 
   <div class="card">
@@ -445,12 +212,9 @@ bulletActive = <span class="keyword">true</span>;           <span class="comment
 <span class="comment">// 画面の外に出たら</span>
 bulletActive = <span class="keyword">false</span>;          <span class="comment">// 弾を消す</span></pre>
   </div>
-</div>
+</section>
 
-<!-- ========================================= -->
-<!-- もし〜なら（if文） -->
-<!-- ========================================= -->
-<div class="section" id="if">
+<section class="section" id="if">
   <h2 class="section-title"><span class="icon">🔀</span> もし〜なら（if文）</h2>
 
   <div class="card">
@@ -496,12 +260,9 @@ bulletActive = <span class="keyword">false</span>;          <span class="comment
   <span class="comment">// つまり「弾が出てないときだけ」</span>
 }</pre>
   </div>
-</div>
+</section>
 
-<!-- ========================================= -->
-<!-- キー入力 -->
-<!-- ========================================= -->
-<div class="section" id="input">
+<section class="section" id="input">
   <h2 class="section-title"><span class="icon">⌨️</span> キー入力</h2>
 
   <div class="card">
@@ -523,12 +284,9 @@ bulletActive = <span class="keyword">false</span>;          <span class="comment
 }</pre>
     <div class="hint">移動にも発射にも使える万能な命令！</div>
   </div>
-</div>
+</section>
 
-<!-- ========================================= -->
-<!-- 計算・ランダム -->
-<!-- ========================================= -->
-<div class="section" id="math">
+<section class="section" id="math">
   <h2 class="section-title"><span class="icon">🎲</span> 計算・ランダム</h2>
 
   <div class="card">
@@ -558,12 +316,9 @@ bulletActive = <span class="keyword">false</span>;          <span class="comment
 }</pre>
     <div class="hint"><code>%</code> は「割った余り」。60で割って余りが0 → ちょうど60の倍数のとき。</div>
   </div>
-</div>
+</section>
 
-<!-- ========================================= -->
-<!-- 文字を出す -->
-<!-- ========================================= -->
-<div class="section" id="text">
+<section class="section" id="text">
   <h2 class="section-title"><span class="icon">✏️</span> 文字を出す</h2>
 
   <div class="card">
@@ -586,12 +341,9 @@ bulletActive = <span class="keyword">false</span>;          <span class="comment
     <pre><span class="func">textAlign</span>(CENTER, CENTER);   <span class="comment">// ど真ん中ぞろえ</span>
 <span class="func">textAlign</span>(LEFT, TOP);         <span class="comment">// 左上ぞろえ</span></pre>
   </div>
-</div>
+</section>
 
-<!-- ========================================= -->
-<!-- 配列 -->
-<!-- ========================================= -->
-<div class="section" id="array">
+<section class="section" id="array">
   <h2 class="section-title"><span class="icon">🗄️</span> 配列（はいれつ）<span class="tag tag-mid">中級</span></h2>
 
   <div class="card">
@@ -640,12 +392,9 @@ bullet.x      <span class="comment">// 240</span>
 bullet.speed  <span class="comment">// 6</span></pre>
     <div class="hint">データに名前をつけてまとめるイメージ。名札みたいなもの！</div>
   </div>
-</div>
+</section>
 
-<!-- ========================================= -->
-<!-- くりかえし -->
-<!-- ========================================= -->
-<div class="section" id="loop">
+<section class="section" id="loop">
   <h2 class="section-title"><span class="icon">🔄</span> くりかえし（for ループ）<span class="tag tag-mid">中級</span></h2>
 
   <div class="card">
@@ -670,12 +419,9 @@ bullet.speed  <span class="comment">// 6</span></pre>
 }</pre>
     <div class="hint">前から消すと番号がズレちゃう。後ろからなら安全！</div>
   </div>
-</div>
+</section>
 
-<!-- ========================================= -->
-<!-- 関数をつくる -->
-<!-- ========================================= -->
-<div class="section" id="function">
+<section class="section" id="function">
   <h2 class="section-title"><span class="icon">🧩</span> 関数をつくる</h2>
 
   <div class="card">
@@ -708,12 +454,9 @@ bullet.speed  <span class="comment">// 6</span></pre>
 <span class="func">drawBullet</span>(<span class="number">100</span>, <span class="number">500</span>);</pre>
     <div class="hint">x, y は「仮の名前」。呼ぶときに実際の数字を入れると、その数字が使われる。</div>
   </div>
-</div>
+</section>
 
-<!-- ========================================= -->
-<!-- RGB カラーチャート -->
-<!-- ========================================= -->
-<div class="section">
+<section class="section">
   <h2 class="section-title"><span class="icon">🌈</span> よく使う色</h2>
 
   <div class="card">
@@ -732,9 +475,9 @@ bullet.speed  <span class="comment">// 6</span></pre>
     </table>
     <div class="hint">数字を変えて実験しよう！ 自分だけの色を見つけてね。</div>
   </div>
-</div>
+</section>
 
-</div><!-- container -->
+</main>
 
 </body>
 </html>

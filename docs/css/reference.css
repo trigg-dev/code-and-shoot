@@ -1,0 +1,144 @@
+/* ========================================
+   reference.css — リファレンスページ専用
+   ======================================== */
+
+/* --- セクションナビ --- */
+.ref-nav {
+  max-width: 900px;
+  margin: 0 auto 40px;
+  padding: 0 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+.ref-nav a {
+  display: inline-block;
+  padding: 6px 16px;
+  background: var(--tag-bg);
+  color: var(--accent);
+  border-radius: 20px;
+  text-decoration: none;
+  font-size: 0.9em;
+  font-weight: 700;
+  transition: background 0.2s;
+}
+.ref-nav a:hover {
+  background: var(--accent-dim);
+  color: #fff;
+}
+
+/* --- セクション --- */
+.section {
+  margin-bottom: 48px;
+}
+.section-title {
+  font-size: 1.5em;
+  font-weight: 900;
+  color: var(--text-bright);
+  padding-bottom: 12px;
+  margin-bottom: 24px;
+  border-bottom: 2px solid var(--card-border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-title .icon {
+  font-size: 1.2em;
+}
+
+/* --- カード --- */
+.card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 16px;
+}
+.card-name {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 1.2em;
+  font-weight: 600;
+  color: var(--yellow);
+  margin-bottom: 4px;
+}
+.card-desc {
+  font-size: 1em;
+  margin-bottom: 14px;
+  color: var(--text);
+}
+.card-desc strong {
+  color: var(--text-bright);
+}
+
+/* --- 引数テーブル --- */
+.args {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 14px;
+  font-size: 0.92em;
+}
+.args th {
+  text-align: left;
+  padding: 6px 12px;
+  background: var(--code-bg);
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.85em;
+  letter-spacing: 0.04em;
+}
+.args td {
+  padding: 6px 12px;
+  border-bottom: 1px solid var(--card-border);
+}
+.args td:first-child {
+  font-family: 'Source Code Pro', monospace;
+  color: var(--orange);
+  white-space: nowrap;
+}
+
+/* --- コードブロック（reference固有） --- */
+pre {
+  background: var(--code-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  overflow-x: auto;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.92em;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+/* --- タグ --- */
+.tag {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 10px;
+  font-size: 0.78em;
+  font-weight: 700;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+.tag-basic { background: #1a3a2a; color: var(--green); }
+.tag-mid   { background: #2a2a1a; color: var(--yellow); }
+.tag-adv   { background: #2a1a2a; color: var(--pink); }
+
+/* --- ヒント --- */
+.hint {
+  background: #1a1e30;
+  border-left: 3px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  padding: 14px 18px;
+  margin-top: 14px;
+  font-size: 0.92em;
+}
+.hint::before {
+  content: '💡 ';
+}
+
+/* --- レスポンシブ --- */
+@media (max-width: 600px) {
+  .card { padding: 16px; }
+  pre { font-size: 0.82em; padding: 12px; }
+}

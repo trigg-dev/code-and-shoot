@@ -1,0 +1,418 @@
+/* ========================================
+   lesson.css — レッスンページ共通スタイル
+   ======================================== */
+
+/* --- レイアウト --- */
+.page-layout {
+  display: flex;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.sidebar {
+  position: sticky;
+  top: 20px;
+  align-self: flex-start;
+  width: 180px;
+  flex-shrink: 0;
+  padding-right: 24px;
+  display: none;
+}
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.sidebar a {
+  display: block;
+  padding: 6px 12px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.82em;
+  font-weight: 700;
+  border-left: 2px solid transparent;
+  border-radius: 0 6px 6px 0;
+  transition: all 0.2s;
+  opacity: 0.6;
+}
+.sidebar a:hover {
+  opacity: 1;
+  color: var(--accent);
+}
+.sidebar a.active {
+  border-left-color: var(--accent);
+  color: var(--accent);
+  opacity: 1;
+  background: rgba(61,184,255,0.05);
+}
+
+main {
+  flex: 1;
+  min-width: 0;
+  max-width: 800px;
+}
+
+@media (min-width: 900px) {
+  .sidebar { display: block; }
+}
+
+/* --- ゴールセクション --- */
+.goal-section {
+  background: linear-gradient(135deg, #1a2a4a 0%, #141828 100%);
+  border: 1px solid var(--accent-dim);
+  border-radius: 12px;
+  padding: 28px;
+  margin-bottom: 40px;
+  position: relative;
+  overflow: hidden;
+}
+.goal-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--green));
+}
+.goal-section h2 {
+  font-size: 1.3em;
+  font-weight: 900;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.goal-section ul {
+  list-style: none;
+  padding: 0;
+}
+.goal-section li {
+  padding: 4px 0;
+  position: relative;
+  padding-left: 24px;
+}
+.goal-section li::before {
+  content: '🎯';
+  position: absolute;
+  left: 0;
+}
+
+/* --- ステップセクション --- */
+.step {
+  margin-bottom: 48px;
+}
+.step-header {
+  font-size: 1.4em;
+  font-weight: 900;
+  color: var(--text-bright);
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--card-border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.step-header h2 {
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+}
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: var(--accent-dim);
+  color: var(--accent);
+  border-radius: 50%;
+  font-size: 0.85em;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+.step p {
+  margin-bottom: 14px;
+  font-size: 1.05em;
+}
+.step strong {
+  color: var(--text-bright);
+}
+
+/* --- コードブロック --- */
+.code-block {
+  position: relative;
+  margin: 16px 0 20px;
+}
+.code-block pre {
+  background: var(--code-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  padding-top: 20px;
+  overflow-x: auto;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.92em;
+  line-height: 1.7;
+  color: var(--text);
+}
+.copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: var(--tag-bg);
+  color: var(--accent);
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+  font-size: 0.78em;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+  z-index: 2;
+}
+.copy-btn:hover {
+  background: var(--accent-dim);
+  color: #fff;
+}
+
+/* --- 情報カード --- */
+.info-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin: 16px 0;
+}
+.info-card h3 {
+  font-size: 1.05em;
+  font-weight: 900;
+  color: var(--text-bright);
+  margin-bottom: 8px;
+}
+.info-card p {
+  font-size: 0.95em;
+}
+.info-card--orange {
+  border-left: 3px solid var(--orange);
+}
+
+/* --- ヒントボックス --- */
+.hint-box {
+  background: #1a1e30;
+  border-left: 3px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  padding: 14px 18px;
+  margin: 14px 0;
+  font-size: 0.95em;
+}
+
+/* --- やってみようボックス --- */
+.try-box {
+  background: #1a2a1a;
+  border-left: 3px solid var(--green);
+  border-radius: 0 8px 8px 0;
+  padding: 14px 18px;
+  margin: 14px 0;
+  font-size: 0.95em;
+  color: var(--green);
+  font-weight: 700;
+}
+.try-box::before { content: '🚀 '; }
+
+/* --- チャレンジボックス --- */
+.challenge-box {
+  background: linear-gradient(135deg, #2a1a2a, #141828);
+  border-left: 3px solid var(--pink);
+  border-radius: 0 8px 8px 0;
+  padding: 14px 18px;
+  margin: 14px 0;
+  font-size: 0.95em;
+  color: var(--pink);
+  font-weight: 700;
+}
+.challenge-box::before { content: '✏️ '; }
+
+/* --- クイズボックス --- */
+.quiz-box {
+  background: linear-gradient(135deg, #1a2040, #141828);
+  border: 1px solid var(--accent-dim);
+  border-radius: 12px;
+  padding: 24px;
+  margin: 20px 0;
+}
+.quiz-box__label {
+  display: inline-block;
+  background: var(--accent-dim);
+  color: var(--accent);
+  font-size: 0.85em;
+  font-weight: 700;
+  padding: 3px 14px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+}
+
+/* --- レビューボックス --- */
+.review-box {
+  background: linear-gradient(135deg, #1a2a1a, #141828);
+  border: 1px solid rgba(108,219,138,0.3);
+  border-radius: 12px;
+  padding: 24px;
+  margin: 20px 0;
+}
+.review-box__label {
+  display: inline-block;
+  background: rgba(108,219,138,0.15);
+  color: var(--green);
+  font-size: 0.85em;
+  font-weight: 700;
+  padding: 3px 14px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+}
+
+/* --- ステップ内リスト --- */
+.step-list {
+  margin: 12px 0 12px 24px;
+  line-height: 2.2;
+}
+
+/* --- 座標ダイアグラム --- */
+.coord-diagram {
+  background: var(--code-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 20px;
+  margin: 16px 0;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.9em;
+  line-height: 1.6;
+  white-space: pre;
+  color: var(--text);
+  overflow-x: auto;
+}
+.coord-diagram .accent { color: var(--accent); font-weight: 700; }
+.coord-diagram .dim { color: #5a6a8a; }
+
+/* --- デモセクション --- */
+.demo-section {
+  text-align: center;
+  margin: 32px 0;
+}
+.demo-section p {
+  margin-bottom: 16px;
+}
+.demo-btn {
+  background: linear-gradient(135deg, var(--accent-dim), var(--accent));
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 36px;
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+  font-size: 1.1em;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.demo-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(61,184,255,0.3);
+}
+
+/* --- モーダル --- */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-overlay[aria-hidden="true"] {
+  display: none;
+}
+.modal-content {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 24px;
+}
+.modal-close {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  color: var(--text);
+  font-size: 1.2em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-close:hover {
+  background: var(--pink);
+  color: #fff;
+}
+.demo-note {
+  text-align: center;
+  padding: 12px;
+  margin-bottom: 12px;
+  color: var(--yellow);
+  font-weight: 700;
+  font-size: 0.95em;
+}
+
+/* --- レッスンナビ --- */
+.lesson-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 60px;
+  padding-top: 30px;
+  border-top: 2px solid var(--card-border);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.lesson-nav a {
+  display: inline-block;
+  padding: 10px 24px;
+  background: var(--tag-bg);
+  color: var(--accent);
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: background 0.2s;
+}
+.lesson-nav a:hover {
+  background: var(--accent-dim);
+  color: #fff;
+}
+.lesson-nav__home {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+}
+
+/* --- 補足テキスト --- */
+.hint-text {
+  margin-top: 8px;
+  font-size: 0.85em;
+  color: var(--accent);
+}
+
+.highlight-text--green {
+  color: var(--green);
+  font-weight: 700;
+  font-size: 1.1em;
+  margin: 12px 0;
+}
+
+/* --- レスポンシブ --- */
+@media (max-width: 600px) {
+  .step { margin-bottom: 32px; }
+  .code-block pre { font-size: 0.82em; padding: 12px; }
+  .goal-section { padding: 20px; }
+}

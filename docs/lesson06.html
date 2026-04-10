@@ -5,342 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lesson 06: 弾を撃とう｜スペース★サバイバー</title>
 <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;900&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #0b0e1a;
-    --card: #141828;
-    --card-border: #1e2744;
-    --accent: #3db8ff;
-    --accent-dim: #1a5a8a;
-    --yellow: #ffe066;
-    --green: #6cdb8a;
-    --pink: #ff6b9d;
-    --orange: #ffa44f;
-    --text: #c8d6e5;
-    --text-bright: #eef2f7;
-    --code-bg: #0d1120;
-    --tag-bg: #1a2340;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: 'M PLUS Rounded 1c', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.8;
-    padding: 0 0 80px 0;
-  }
-
-  /* --- ヘッダー --- */
-  .header {
-    text-align: center;
-    padding: 60px 20px 40px;
-    position: relative;
-    overflow: hidden;
-  }
-  .header::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: radial-gradient(ellipse at 50% 0%, rgba(61,184,255,0.12) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .header .lesson-number {
-    display: inline-block;
-    background: var(--accent-dim);
-    color: var(--accent);
-    font-size: 0.9em;
-    font-weight: 700;
-    padding: 4px 18px;
-    border-radius: 20px;
-    margin-bottom: 12px;
-    letter-spacing: 0.05em;
-  }
-  .header h1 {
-    font-size: 2.4em;
-    font-weight: 900;
-    color: var(--text-bright);
-    letter-spacing: 0.02em;
-  }
-  .header h1 span { color: var(--yellow); }
-  .header p {
-    margin-top: 8px;
-    font-size: 1.05em;
-    color: var(--text);
-    opacity: 0.7;
-  }
-
-  /* --- レイアウト --- */
-  .page-layout { display: flex; max-width: 1100px; margin: 0 auto; padding: 0 20px; }
-  .sidebar {
-    position: sticky; top: 20px; align-self: flex-start;
-    width: 180px; flex-shrink: 0; padding-right: 24px; display: none;
-  }
-  .sidebar nav { display: flex; flex-direction: column; gap: 4px; }
-  .sidebar a {
-    display: block; padding: 6px 12px; color: var(--text);
-    text-decoration: none; font-size: 0.82em; font-weight: 700;
-    border-left: 2px solid transparent; border-radius: 0 6px 6px 0;
-    transition: all 0.2s; opacity: 0.6;
-  }
-  .sidebar a:hover { opacity: 1; color: var(--accent); }
-  .sidebar a.active {
-    border-left-color: var(--accent); color: var(--accent);
-    opacity: 1; background: rgba(61,184,255,0.05);
-  }
-  .main-content { flex: 1; min-width: 0; max-width: 800px; }
-  @media (min-width: 900px) { .sidebar { display: block; } }
-
-  /* --- ゴールセクション --- */
-  .goal-section {
-    background: linear-gradient(135deg, #1a2a4a 0%, #141828 100%);
-    border: 1px solid var(--accent-dim);
-    border-radius: 12px;
-    padding: 28px;
-    margin-bottom: 40px;
-    position: relative;
-    overflow: hidden;
-  }
-  .goal-section::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; height: 3px;
-    background: linear-gradient(90deg, var(--yellow), var(--orange));
-  }
-  .goal-section h2 {
-    font-size: 1.3em;
-    font-weight: 900;
-    color: var(--yellow);
-    margin-bottom: 12px;
-  }
-  .goal-section ul {
-    list-style: none;
-    padding: 0;
-  }
-  .goal-section li {
-    padding: 4px 0;
-    position: relative;
-    padding-left: 24px;
-  }
-  .goal-section li::before {
-    content: '🎯';
-    position: absolute;
-    left: 0;
-  }
-
-  /* --- ステップセクション --- */
-  .step {
-    margin-bottom: 48px;
-  }
-  .step-title {
-    font-size: 1.4em;
-    font-weight: 900;
-    color: var(--text-bright);
-    padding-bottom: 12px;
-    margin-bottom: 20px;
-    border-bottom: 2px solid var(--card-border);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .step-number {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    background: var(--accent-dim);
-    color: var(--accent);
-    border-radius: 50%;
-    font-size: 0.85em;
-    font-weight: 900;
-    flex-shrink: 0;
-  }
-  .step p {
-    margin-bottom: 14px;
-    font-size: 1.05em;
-  }
-  .step strong {
-    color: var(--text-bright);
-  }
-
-  /* --- コードブロック --- */
-  .code-block {
-    position: relative;
-    margin: 16px 0 20px;
-  }
-  .code-block pre {
-    background: var(--code-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 8px;
-    padding: 16px 20px;
-    padding-top: 20px;
-    overflow-x: auto;
-    font-family: 'Source Code Pro', monospace;
-    font-size: 0.92em;
-    line-height: 1.7;
-    color: var(--text);
-  }
-  .copy-btn {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    background: var(--tag-bg);
-    color: var(--accent);
-    border: 1px solid var(--card-border);
-    border-radius: 6px;
-    padding: 4px 12px;
-    font-family: 'M PLUS Rounded 1c', sans-serif;
-    font-size: 0.78em;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background 0.2s;
-    z-index: 2;
-  }
-  .copy-btn:hover {
-    background: var(--accent-dim);
-    color: #fff;
-  }
-
-  code {
-    font-family: 'Source Code Pro', monospace;
-    background: var(--code-bg);
-    padding: 2px 7px;
-    border-radius: 4px;
-    font-size: 0.92em;
-    color: var(--yellow);
-  }
-
-  pre .comment { color: #5a6a8a; }
-  pre .keyword { color: var(--pink); }
-  pre .func { color: var(--yellow); }
-  pre .number { color: var(--green); }
-  pre .string { color: var(--orange); }
-
-  /* --- ヒント・やってみよう・チャレンジ --- */
-  .hint {
-    background: #1a1e30;
-    border-left: 3px solid var(--accent);
-    border-radius: 0 8px 8px 0;
-    padding: 14px 18px;
-    margin: 14px 0;
-    font-size: 0.95em;
-  }
-  .try-it {
-    background: #1a2a1a;
-    border-left: 3px solid var(--green);
-    border-radius: 0 8px 8px 0;
-    padding: 14px 18px;
-    margin: 14px 0;
-    font-size: 0.95em;
-    color: var(--green);
-    font-weight: 700;
-  }
-  .try-it::before { content: '🚀 '; }
-  .challenge {
-    background: linear-gradient(135deg, #1a1a2e 0%, #1e1430 100%);
-    border-left: 3px solid var(--orange);
-    border-radius: 0 8px 8px 0;
-    padding: 14px 18px;
-    margin: 14px 0;
-    font-size: 0.95em;
-    color: var(--orange);
-    font-weight: 700;
-  }
-  .challenge::before { content: '🏆 '; }
-
-  /* --- デモボタン・モーダル --- */
-  .demo-btn {
-    background: linear-gradient(135deg, var(--accent-dim), var(--accent));
-    color: #fff; border: none; border-radius: 12px;
-    padding: 14px 36px; font-family: 'M PLUS Rounded 1c', sans-serif;
-    font-size: 1.1em; font-weight: 700; cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .demo-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(61,184,255,0.3); }
-  .demo-btn-wrap { text-align: center; margin: 24px 0; }
-  .modal-overlay {
-    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.85); z-index: 1000;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .modal-overlay.hidden { display: none; }
-  .modal-content {
-    position: relative; background: var(--card);
-    border: 1px solid var(--card-border); border-radius: 16px; padding: 24px;
-  }
-  .modal-close {
-    position: absolute; top: -12px; right: -12px;
-    width: 36px; height: 36px; border-radius: 50%;
-    background: var(--card); border: 1px solid var(--card-border);
-    color: var(--text); font-size: 1.2em; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .modal-close:hover { background: var(--pink); color: #fff; }
-  .demo-note {
-    text-align: center; padding: 12px; margin-bottom: 12px;
-    color: var(--yellow); font-weight: 700; font-size: 0.95em;
-  }
-  #demo-container { display: flex; justify-content: center; }
-  #demo-container canvas {
-    border-radius: 8px;
-    border: 1px solid var(--card-border);
-  }
-
-  /* --- ナビゲーション --- */
-  .lesson-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 60px;
-    padding-top: 30px;
-    border-top: 2px solid var(--card-border);
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-  .lesson-nav a {
-    display: inline-block;
-    padding: 10px 24px;
-    background: var(--tag-bg);
-    color: var(--accent);
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 700;
-    transition: background 0.2s;
-  }
-  .lesson-nav a:hover {
-    background: var(--accent-dim);
-    color: #fff;
-  }
-  .lesson-nav .home-link {
-    background: var(--card);
-    border: 1px solid var(--card-border);
-  }
-
-  /* --- レスポンシブ --- */
-  @media (max-width: 600px) {
-    .header h1 { font-size: 1.6em; }
-    .step { margin-bottom: 32px; }
-    .code-block pre { font-size: 0.82em; padding: 12px; }
-    .goal-section { padding: 20px; }
-  }
-</style>
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/lesson.css">
 </head>
 <body>
 
-<!-- ========== ヘッダー ========== -->
-<div class="header">
-  <div class="lesson-number">LESSON 06</div>
+<header>
+  <span class="lesson-badge">LESSON 06</span>
   <h1>弾を<span>撃とう</span></h1>
   <p>スペースキーでビームを発射！シューティングゲームっぽくなるよ！</p>
-</div>
+</header>
 
-<!-- ========== メイン ========== -->
 <div class="page-layout">
 
-  <!-- サイドバー -->
-  <aside class="sidebar">
+  <aside class="sidebar" aria-label="ページ内ナビ">
     <nav>
       <a href="#goal">今回のゴール</a>
       <a href="#step1">true と false</a>
@@ -353,11 +31,9 @@
     </nav>
   </aside>
 
-  <!-- メインコンテンツ -->
-  <div class="main-content">
+  <main id="main-content">
 
-  <!-- ゴール -->
-  <div id="goal" class="goal-section">
+  <section id="goal" class="goal-section">
     <h2>今回のゴール</h2>
     <ul>
       <li><code>true</code> / <code>false</code> の考え方をおぼえる</li>
@@ -365,27 +41,25 @@
       <li>スペースキーで弾を発射できるようにする</li>
       <li>画面の外に出た弾を消す</li>
     </ul>
-  </div>
+  </section>
 
-  <!-- ステップ1 -->
   <div id="step1" class="step">
-    <h3 class="step-title"><span class="step-number">1</span> true と false（ホントとウソ）</h3>
+    <div class="step-header"><span class="step-number">1</span> <h2>true と false（ホントとウソ）</h2></div>
     <p>今まで使った変数には数字を入れてきたよね。でも変数には<strong>「ホント」か「ウソ」</strong>も入れられるんだ。</p>
     <p>プログラミングでは、ホントのことを <code>true</code>、ウソのことを <code>false</code> って書くよ。</p>
     <div class="code-block">
-      <button class="copy-btn">コピー</button>
+      <button class="copy-btn" aria-label="コードをコピー">コピー</button>
 <pre><code><span class="keyword">let</span> bulletActive = <span class="keyword">false</span>;  <span class="comment">// 最初は弾は飛んでいない（ウソ）</span></code></pre>
     </div>
     <p>この <code>bulletActive</code> が <code>true</code> のときは「弾が飛んでいる」、<code>false</code> のときは「弾がない」ってことになるよ。</p>
-    <div class="hint">💡 <code>true</code> / <code>false</code> のことを<strong>「真偽値（しんぎち）」</strong>って言うよ。英語では boolean（ブーリアン）。</div>
+    <div class="hint-box">💡 <code>true</code> / <code>false</code> のことを<strong>「真偽値（しんぎち）」</strong>って言うよ。英語では boolean（ブーリアン）。</div>
   </div>
 
-  <!-- ステップ2 -->
   <div id="step2" class="step">
-    <h3 class="step-title"><span class="step-number">2</span> 弾の変数を準備しよう</h3>
+    <div class="step-header"><span class="step-number">2</span> <h2>弾の変数を準備しよう</h2></div>
     <p>弾を管理するために、4つの変数を追加するよ。</p>
     <div class="code-block">
-      <button class="copy-btn">コピー</button>
+      <button class="copy-btn" aria-label="コードをコピー">コピー</button>
 <pre><code><span class="keyword">let</span> bulletX = <span class="number">0</span>;         <span class="comment">// 弾のX座標</span>
 <span class="keyword">let</span> bulletY = <span class="number">0</span>;         <span class="comment">// 弾のY座標</span>
 <span class="keyword">let</span> bulletSpeed = <span class="number">6</span>;     <span class="comment">// 弾の速さ</span>
@@ -394,13 +68,12 @@
     <p><code>bulletX</code> と <code>bulletY</code> は最初は 0 でOK。発射するときに正しい位置をセットするからね。</p>
   </div>
 
-  <!-- ステップ3 -->
   <div id="step3" class="step">
-    <h3 class="step-title"><span class="step-number">3</span> スペースキーで発射！</h3>
+    <div class="step-header"><span class="step-number">3</span> <h2>スペースキーで発射！</h2></div>
     <p>スペースキーのキーコードは <strong>32</strong>。<code>keyIsDown(32)</code> で「スペースキーが押されているか」をチェックできるよ。</p>
     <p>でも、弾がすでに飛んでいるときにもう1発撃てたら変になるよね。だから <code>!bulletActive</code>（弾が飛んでいないとき）もチェックするんだ。</p>
     <div class="code-block">
-      <button class="copy-btn">コピー</button>
+      <button class="copy-btn" aria-label="コードをコピー">コピー</button>
 <pre><code><span class="keyword">if</span> (<span class="func">keyIsDown</span>(<span class="number">32</span>)) {
   <span class="keyword">if</span> (!bulletActive) {
     bulletActive = <span class="keyword">true</span>;        <span class="comment">// 弾を「飛んでる」にする</span>
@@ -410,15 +83,14 @@
 }</code></pre>
     </div>
     <p><code>!</code> は「〜じゃない」っていう意味。<code>!bulletActive</code> は「bulletActive が false のとき」ってことだよ。</p>
-    <div class="hint">💡 <code>!</code>（NOT演算子）は true と false をひっくり返すよ。<code>!true</code> は <code>false</code>、<code>!false</code> は <code>true</code>。</div>
+    <div class="hint-box">💡 <code>!</code>（NOT演算子）は true と false をひっくり返すよ。<code>!true</code> は <code>false</code>、<code>!false</code> は <code>true</code>。</div>
   </div>
 
-  <!-- ステップ4 -->
   <div id="step4" class="step">
-    <h3 class="step-title"><span class="step-number">4</span> 弾を動かそう</h3>
+    <div class="step-header"><span class="step-number">4</span> <h2>弾を動かそう</h2></div>
     <p>弾が飛んでいるときだけ、<code>bulletY</code> を減らして上に移動させるよ。</p>
     <div class="code-block">
-      <button class="copy-btn">コピー</button>
+      <button class="copy-btn" aria-label="コードをコピー">コピー</button>
 <pre><code><span class="keyword">if</span> (bulletActive) {
   bulletY = bulletY - bulletSpeed;  <span class="comment">// 上に移動！</span>
 }</code></pre>
@@ -426,127 +98,65 @@
     <p>Y座標を減らすと上に動く、だったよね。<code>bulletSpeed</code> が 6 だから、毎フレーム 6 ピクセルずつ上に飛んでいくよ。</p>
   </div>
 
-  <!-- ステップ5 -->
   <div id="step5" class="step">
-    <h3 class="step-title"><span class="step-number">5</span> 画面の外に出たら消す</h3>
+    <div class="step-header"><span class="step-number">5</span> <h2>画面の外に出たら消す</h2></div>
     <p>弾がずっと飛び続けると、画面の外に出ちゃうよね。そうなったら <code>bulletActive</code> を <code>false</code> に戻して、また撃てるようにしよう。</p>
-    <div class="challenge">チャレンジ：弾が画面の外に出たら bulletActive を false にしよう！bulletY が 0 より小さくなったら画面外だよ。</div>
-    <div class="hint">💡 ステップ3の発射ロジックを思い出してみよう。<code>bulletActive</code> が <code>false</code> になれば、次にスペースキーを押したときにまた新しい弾を撃てるようになるよ。</div>
+    <div class="challenge-box">チャレンジ：弾が画面の外に出たら bulletActive を false にしよう！bulletY が 0 より小さくなったら画面外だよ。</div>
+    <div class="hint-box">💡 ステップ3の発射ロジックを思い出してみよう。<code>bulletActive</code> が <code>false</code> になれば、次にスペースキーを押したときにまた新しい弾を撃てるようになるよ。</div>
   </div>
 
-  <!-- ステップ6 -->
   <div id="step6" class="step">
-    <h3 class="step-title"><span class="step-number">6</span> 弾を描こう</h3>
+    <div class="step-header"><span class="step-number">6</span> <h2>弾を描こう</h2></div>
     <p>弾の描画も、弾があるときだけにしよう。前のレッスンで使った <code>if</code> と <code>ellipse</code> を組み合わせるよ。</p>
-    <div class="challenge">チャレンジ：弾があるときだけ描こう！if (bulletActive) を使って ellipse で弾を描いてみよう。色は fill(255, 255, 100) がおすすめ！</div>
-    <div class="try-it">弾の色や大きさを変えてみよう！たとえば <code>fill(255, 100, 100)</code> にすると赤い弾になるよ。</div>
+    <div class="challenge-box">チャレンジ：弾があるときだけ描こう！if (bulletActive) を使って ellipse で弾を描いてみよう。色は fill(255, 255, 100) がおすすめ！</div>
+    <div class="try-box">弾の色や大きさを変えてみよう！たとえば <code>fill(255, 100, 100)</code> にすると赤い弾になるよ。</div>
   </div>
 
-  <!-- デモ -->
-  <div id="demo" class="demo-btn-wrap">
+  <div id="demo" class="demo-section">
     <button class="demo-btn" onclick="openDemo()">🎮 デモで遊ぶ</button>
   </div>
 
-  <!-- ナビゲーション -->
-  <div class="lesson-nav">
+  <nav class="lesson-nav" aria-label="レッスンナビゲーション">
     <a href="lesson05.html">&larr; Lesson 05</a>
-    <a href="index.html" class="home-link">もくじに戻る</a>
+    <a href="index.html" class="lesson-nav__home">もくじに戻る</a>
     <a href="lesson07.html">Lesson 07 &rarr;</a>
-  </div>
+  </nav>
 
-  </div><!-- /.main-content -->
-</div><!-- /.page-layout -->
+  </main>
+</div>
 
-<!-- ========== モーダル ========== -->
-<div id="demo-modal" class="modal-overlay hidden">
+<div id="demo-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-hidden="true" aria-label="デモプレビュー">
   <div class="modal-content">
-    <button class="modal-close" onclick="closeDemo()">&times;</button>
+    <button class="modal-close" aria-label="閉じる" onclick="closeDemo()">&times;</button>
     <p class="demo-note">デモをクリックしてから矢印キーで移動、スペースキーで弾を撃とう！</p>
     <div id="demo-container"></div>
   </div>
 </div>
 
-<!-- ========== p5.js デモ ========== -->
 <script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js"></script>
 <script>
-let demoInstance = null;
-
-function openDemo() {
-  document.getElementById('demo-modal').classList.remove('hidden');
-  if (!demoInstance) {
-    demoInstance = new p5(function(p) {
-      let x = 240, y = 580;
-      let bulletX = 0, bulletY = 0, bulletSpeed = 6, bulletActive = false;
-      p.setup = function() { p.createCanvas(480, 640); };
-      p.draw = function() {
-        p.background(10, 10, 30);
-        if (p.keyIsDown(p.LEFT_ARROW) && x > 20) x -= 4;
-        if (p.keyIsDown(p.RIGHT_ARROW) && x < 460) x += 4;
-        if (p.keyIsDown(p.UP_ARROW) && y > 20) y -= 4;
-        if (p.keyIsDown(p.DOWN_ARROW) && y < 620) y += 4;
-        if (p.keyIsDown(32) && !bulletActive) {
-          bulletActive = true; bulletX = x; bulletY = y - 20;
-        }
-        if (bulletActive) bulletY -= bulletSpeed;
-        if (bulletY < 0) bulletActive = false;
-        p.fill(60, 180, 255); p.noStroke();
-        p.ellipse(x, y, 36, 44);
-        if (bulletActive) { p.fill(255, 255, 100); p.ellipse(bulletX, bulletY, 6, 12); }
-      };
-    }, 'demo-container');
-  }
-}
-
-function closeDemo() {
-  document.getElementById('demo-modal').classList.add('hidden');
-  if (demoInstance) {
-    demoInstance.remove();
-    demoInstance = null;
-  }
-}
-
-// ESCキーでモーダルを閉じる
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') closeDemo();
-});
-</script>
-
-<!-- ========== コピーボタン ========== -->
-<script>
-document.querySelectorAll('.copy-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const code = btn.closest('.code-block').querySelector('code').textContent;
-    navigator.clipboard.writeText(code);
-    btn.textContent = 'コピーした！';
-    setTimeout(() => btn.textContent = 'コピー', 1500);
-  });
-});
-</script>
-
-<!-- ========== サイドバー スクロール追従 ========== -->
-<script>
-(function() {
-  const links = document.querySelectorAll('.sidebar a');
-  const sections = [];
-  links.forEach(link => {
-    const id = link.getAttribute('href').slice(1);
-    const el = document.getElementById(id);
-    if (el) sections.push({ id, el, link });
-  });
-
-  function updateActive() {
-    let current = sections[0];
-    for (const s of sections) {
-      if (s.el.getBoundingClientRect().top <= 80) current = s;
+window.demoSketch = function(p) {
+  let x = 240, y = 580;
+  let bulletX = 0, bulletY = 0, bulletSpeed = 6, bulletActive = false;
+  p.setup = function() { p.createCanvas(480, 640); };
+  p.draw = function() {
+    p.background(10, 10, 30);
+    if (p.keyIsDown(p.LEFT_ARROW) && x > 20) x -= 4;
+    if (p.keyIsDown(p.RIGHT_ARROW) && x < 460) x += 4;
+    if (p.keyIsDown(p.UP_ARROW) && y > 20) y -= 4;
+    if (p.keyIsDown(p.DOWN_ARROW) && y < 620) y += 4;
+    if (p.keyIsDown(32) && !bulletActive) {
+      bulletActive = true; bulletX = x; bulletY = y - 20;
     }
-    links.forEach(l => l.classList.remove('active'));
-    if (current) current.link.classList.add('active');
-  }
-
-  window.addEventListener('scroll', updateActive, { passive: true });
-  updateActive();
-})();
+    if (bulletActive) bulletY -= bulletSpeed;
+    if (bulletY < 0) bulletActive = false;
+    p.fill(60, 180, 255); p.noStroke();
+    p.ellipse(x, y, 36, 44);
+    if (bulletActive) { p.fill(255, 255, 100); p.ellipse(bulletX, bulletY, 6, 12); }
+  };
+};
 </script>
+<script src="js/common.js"></script>
 
 </body>
 </html>
