@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 07: 敵を出そう｜Code & Shoot</title>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;900&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/lesson.css">
+</head>
+<body>
+
+<header>
+  <span class="lesson-badge">LESSON 07</span>
+  <h1><span>敵</span>を出そう</h1>
+  <p>上から降ってくる敵キャラを登場させよう！</p>
+</header>
+
+<div class="page-layout">
+
+  <aside class="sidebar" aria-label="ページ内ナビ">
+    <nav>
+      <a href="#goal">今回のゴール</a>
+      <a href="#step1">1. 敵って何が必要？</a>
+      <a href="#step2">2. 敵の変数</a>
+      <a href="#step3">3. 敵を動かす</a>
+      <a href="#step4">4. リスポーン</a>
+      <a href="#step5">5. 敵を描こう</a>
+      <a href="#challenge">発展チャレンジ</a>
+      <a href="#demo">デモ</a>
+    </nav>
+  </aside>
+
+  <main id="main-content">
+
+  <section id="goal" class="goal-section">
+    <h2>今回のゴール</h2>
+    <ul>
+      <li>敵キャラを変数で管理するパターンをおぼえる</li>
+      <li><code>random()</code> でランダムな位置に敵を出す</li>
+      <li>画面の外に出た敵をまた上から登場させる</li>
+    </ul>
+  </section>
+
+  <div id="step1" class="step">
+    <div class="step-header"><span class="step-number">1</span> <h2>敵って何が必要？</h2></div>
+    <p>前回、弾を作ったときのことを思い出してみよう。弾には4つの変数が必要だったよね：</p>
+    <ul class="step-list">
+      <li><strong>位置</strong>（X座標、Y座標）</li>
+      <li><strong>速さ</strong>（bulletSpeed）</li>
+      <li><strong>状態</strong>（bulletActive）</li>
+    </ul>
+    <p>敵も<strong>まったく同じパターン</strong>！位置・速さ・状態の変数を作れば管理できるんだ。</p>
+    <div class="hint-box">💡 プログラミングでは、同じ「パターン」が何度も出てくるよ。弾で覚えたやり方が、そのまま敵にも使えるんだ！</div>
+  </div>
+
+  <div id="step2" class="step">
+    <div class="step-header"><span class="step-number">2</span> <h2>敵の変数を準備しよう</h2></div>
+    <p>弾のときと同じように、敵用の変数を4つ作ろう。プレイヤーや弾の変数の<strong>下に</strong>書いてね：</p>
+    <div class="code-block">
+      <button class="copy-btn" aria-label="コードをコピー">コピー</button>
+<pre><code><span class="keyword">let</span> enemyX = <span class="number">240</span>;       <span class="comment">// 敵のX座標</span>
+<span class="keyword">let</span> enemyY = <span class="number">-20</span>;       <span class="comment">// 敵のY座標（画面の上の外）</span>
+<span class="keyword">let</span> enemySpeed = <span class="number">2</span>;     <span class="comment">// 敵の速さ</span>
+<span class="keyword">let</span> enemyActive = <span class="keyword">true</span>; <span class="comment">// 敵がいるかどうか</span></code></pre>
+    </div>
+    <p><code>enemyY = -20</code> にしているのは、<strong>最初は画面の上の外</strong>にいて、そこから降りてくるようにするため。</p>
+    <div class="info-card">
+      <h3>弾と敵のくらべっこ</h3>
+      <p>弾：<code>bulletX</code>, <code>bulletY</code>, <code>bulletSpeed</code>, <code>bulletActive</code><br>
+      敵：<code>enemyX</code>, <code>enemyY</code>, <code>enemySpeed</code>, <code>enemyActive</code></p>
+      <p>名前が違うだけで、<strong>構造はまったく同じ</strong>だね！</p>
+    </div>
+  </div>
+
+  <div id="step3" class="step">
+    <div class="step-header"><span class="step-number">3</span> <h2>敵を動かそう</h2></div>
+    <p>弾は上に飛んだよね（<code>bulletY = bulletY - bulletSpeed</code>）。敵は逆で、<strong>上から下に降りてくる</strong>。だから Y を<strong>増やす</strong>：</p>
+    <div class="code-block">
+      <button class="copy-btn" aria-label="コードをコピー">コピー</button>
+<pre><code><span class="keyword">if</span> (enemyActive) {
+  enemyY = enemyY + enemySpeed;
+}</code></pre>
+    </div>
+    <p>これを <code>draw()</code> の中に書こう。弾の処理のあとがいいよ。</p>
+    <div class="hint-box">💡 弾は <code>- bulletSpeed</code> で上へ、敵は <code>+ enemySpeed</code> で下へ。<code>+</code> と <code>-</code> が逆なだけ！</div>
+  </div>
+
+  <div id="step4" class="step">
+    <div class="step-header"><span class="step-number">4</span> <h2>画面の外に出たら、また上から！</h2></div>
+    <p>弾は画面の外に出たら <code>bulletActive = false</code> で消したよね。でも敵はちょっと違う。敵は<strong>何度も出てきてほしい</strong>！</p>
+    <p>だから、画面の下に消えたら<strong>Y を上に戻して、X をランダムな位置に変える</strong>よ。</p>
+    <div class="code-block">
+      <button class="copy-btn" aria-label="コードをコピー">コピー</button>
+<pre><code><span class="keyword">if</span> (enemyY > <span class="number">660</span>) {
+  enemyX = <span class="func">random</span>(<span class="number">20</span>, <span class="number">460</span>);
+  enemyY = <span class="number">-20</span>;
+}</code></pre>
+    </div>
+    <p><code>660</code> は画面の高さ（640）よりちょっと下。完全に消えてから戻すためだね。</p>
+
+    <div class="info-card">
+      <h3>random() ってなに？</h3>
+      <p><code>random(20, 460)</code> は、<strong>20〜460 の間のランダムな数字</strong>を返してくれる命令だよ。</p>
+      <p>サイコロみたいなもの！毎回ちがう場所から敵が出てくるから、ゲームっぽくなるよ。</p>
+    </div>
+
+    <div class="try-box"><code>random(20, 460)</code> の数字を変えてみよう！<code>random(200, 280)</code> にしたら敵はどのあたりに出てくるかな？</div>
+  </div>
+
+  <div id="step5" class="step">
+    <div class="step-header"><span class="step-number">5</span> <h2>敵を描こう</h2></div>
+    <p>弾を描いたときと同じパターンだよ。<code>enemyActive</code> が <code>true</code> のときだけ描こう。</p>
+
+    <div class="challenge-box">チャレンジ：弾の描画コードを参考にして、敵の描画を書いてみよう！色は <code>fill(255, 80, 80)</code>（赤っぽい色）、サイズは <code>36, 36</code>（まん丸）がおすすめ！</div>
+
+    <div class="code-block spoiler">
+      <button class="copy-btn" aria-label="コードをコピー">コピー</button>
+<pre><code><span class="keyword">if</span> (enemyActive) {
+  <span class="func">fill</span>(<span class="number">255</span>, <span class="number">80</span>, <span class="number">80</span>);
+  <span class="func">ellipse</span>(enemyX, enemyY, <span class="number">36</span>, <span class="number">36</span>);
+}</code></pre>
+    </div>
+
+    <div class="hint-box">💡 弾の描画と見くらべてみよう。<code>bulletActive</code> → <code>enemyActive</code>、<code>bulletX</code> → <code>enemyX</code> に変えるだけ！</div>
+  </div>
+
+  <div id="challenge" class="step">
+    <div class="step-header"><span class="step-number">★</span> <h2>発展チャレンジ：スピードもランダムに！</h2></div>
+    <p>今のままだと、敵は毎回同じ速さで降りてくるよね。ちょっと退屈かも？</p>
+    <p>ステップ4のリスポーン処理の中で、<strong>速さもランダムに変えて</strong>みよう！</p>
+
+    <div class="challenge-box">リスポーンのとき、<code>enemySpeed</code> も <code>random()</code> で変えてみよう！速さは 1〜4 くらいがちょうどいいよ。</div>
+
+    <div class="hint-box">💡 ヒント：<code>enemyY = -20;</code> の下に、<code>enemySpeed = random(1, 4);</code> を追加するだけ！</div>
+
+    <div class="try-box">もっとやりたい人は、敵のサイズもランダムにしてみよう！<code>let enemySize = 36;</code> という変数を追加して、リスポーンのときに変えてみて。</div>
+  </div>
+
+  <div id="demo" class="demo-section">
+    <button class="demo-btn" onclick="openDemo()">🎮 デモを見る</button>
+  </div>
+
+  <nav class="lesson-nav" aria-label="レッスンナビゲーション">
+    <a href="lesson06.html">&larr; Lesson 06</a>
+    <a href="index.html" class="lesson-nav__home">もくじに戻る</a>
+    <a href="lesson08.html">Lesson 08 &rarr;</a>
+  </nav>
+
+  </main>
+</div>
+
+<div class="modal-overlay" id="demo-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="デモプレビュー">
+  <div class="modal-content">
+    <button class="modal-close" aria-label="閉じる" onclick="closeDemo()">&times;</button>
+    <p class="demo-note">矢印キーで移動、スペースで弾を撃とう！赤い敵が上から降ってくるよ。（まだ当たり判定はないよ）</p>
+    <div id="demo-container"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js"></script>
+<script>
+window.demoSketch = function(p) {
+  let x = 240, y = 580;
+  let bulletX = 0, bulletY = 0, bulletSpeed = 6, bulletActive = false;
+  let enemyX, enemyY, enemySpeed;
+
+  p.setup = function() {
+    p.createCanvas(480, 640);
+    enemyX = p.random(20, 460);
+    enemyY = -20;
+    enemySpeed = p.random(1, 4);
+  };
+
+  p.draw = function() {
+    p.background(10, 10, 30);
+
+    // 星
+    p.randomSeed(42);
+    p.fill(255, 255, 255, 80);
+    p.noStroke();
+    for (let i = 0; i < 80; i++) {
+      p.ellipse(p.random(480), p.random(640), p.random(1, 3));
+    }
+
+    // プレイヤー操作
+    if (p.keyIsDown(p.LEFT_ARROW) && x > 20) x -= 4;
+    if (p.keyIsDown(p.RIGHT_ARROW) && x < 460) x += 4;
+    if (p.keyIsDown(p.UP_ARROW) && y > 20) y -= 4;
+    if (p.keyIsDown(p.DOWN_ARROW) && y < 620) y += 4;
+
+    // 弾発射
+    if (p.keyIsDown(32) && !bulletActive) {
+      bulletActive = true; bulletX = x; bulletY = y - 20;
+    }
+    if (bulletActive) bulletY -= bulletSpeed;
+    if (bulletY < 0) bulletActive = false;
+
+    // 敵移動
+    enemyY += enemySpeed;
+    if (enemyY > 660) {
+      enemyX = p.random(20, 460);
+      enemyY = -20;
+      enemySpeed = p.random(1, 4);
+    }
+
+    // 描画: プレイヤー
+    p.fill(60, 180, 255);
+    p.noStroke();
+    p.ellipse(x, y, 36, 44);
+
+    // 描画: エンジンの光
+    p.fill(100, 200, 255, 150);
+    p.ellipse(x, y + 20, 12, 8);
+
+    // 描画: 弾
+    if (bulletActive) {
+      p.fill(255, 255, 100);
+      p.ellipse(bulletX, bulletY, 6, 12);
+    }
+
+    // 描画: 敵
+    p.fill(255, 80, 80);
+    p.ellipse(enemyX, enemyY, 36, 36);
+  };
+};
+</script>
+<script src="js/common.js"></script>
+
+</body>
+</html>
